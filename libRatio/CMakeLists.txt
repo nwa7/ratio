@@ -22,7 +22,7 @@ endif()
 add_library(ratio ${source_files} ${header_files})
 
 # compilation flags
-target_compile_features(ratio PRIVATE cxx_std_11) # use at least c++ 11
+target_compile_features(ratio PRIVATE cxx_std_17) # use at least c++ 11
 if (MSVC)
     target_compile_options(ratio PRIVATE /W3)
 else()
