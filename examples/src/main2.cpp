@@ -1,6 +1,7 @@
 #include <iostream>
 #include "ratio.hpp"
 
+
 int main(){
 
     Ratio a(1,2);
@@ -77,8 +78,6 @@ int main(){
     }else{
         std::cout << "error a = c"<<std::endl;
     }
-
-
 
 
     return 0;

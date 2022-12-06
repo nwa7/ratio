@@ -13,12 +13,17 @@ class Ratio{
 
     void displayRatio() const;
     void reduce();
+    int getNum();
+    int getDenom();
 
     Ratio operator+(const Ratio &r) const;
     Ratio operator-(const Ratio &r) const;
     Ratio operator*(const Ratio &r) const;
     Ratio operator/(const Ratio &r) const;
     Ratio operator-() const;
+
+    Ratio ratio_sqrt() const ;
+    Ratio ratio_abs() const;
 
     Ratio inverse() const;
     

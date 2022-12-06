@@ -48,3 +48,11 @@ include_directories(${CMAKE_SOURCE_DIR}/libRatio/include) # important : other pr
 message(STATUS "examples cmake part ..." )
 add_subdirectory(examples)
 
+# add myTest
+find_package(GTest OPTIONAL_COMPONENTS)
+if(GTEST_FOUND)
+	message(STATUS "myTest cmake part ..." )
+	add_subdirectory(unitTests)
+elseif()
+	message(WARNING "google test not found, skipping myTest ..." )
+endif()
