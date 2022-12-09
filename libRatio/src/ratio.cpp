@@ -118,16 +118,16 @@ Ratio Ratio::ratio_abs() const {
     return result;
 }
 
+int Ratio::ratio_intpart() const {
+   int result = 0;
+   if (m_denom != 0){
+       result = static_cast<int>(m_num/(int)m_denom);
+   }
+   return result;
+}
+
 
 bool Ratio::operator==(const Ratio &r) const {
-
-    /*Ratio rtmp = r;
-    rtmp.reduce();
-    
-    Ratio thistmp = *this; 
-    thistmp.reduce();
-
-    return thistmp.m_num == rtmp.m_num && thistmp.m_denom == rtmp.m_denom;*/
 
     return m_num * r.m_denom == r.m_num * m_denom;
 
@@ -135,13 +135,6 @@ bool Ratio::operator==(const Ratio &r) const {
 
 bool Ratio::operator!=(const Ratio &r) const {
 
-    /*Ratio rtmp = r;
-    rtmp.reduce();
-    
-    Ratio thistmp = *this; 
-    thistmp.reduce();
-
-    return !(thistmp == rtmp);*/
 
     return !((*this) == r);
 
@@ -149,35 +142,12 @@ bool Ratio::operator!=(const Ratio &r) const {
 
 bool Ratio::operator>(const Ratio &r) const {
 
-    /*Ratio rtmp = r;
-    rtmp.reduce();
-
-    Ratio thistmp = *this; 
-    thistmp.reduce();
-
-    int a = thistmp.m_num * rtmp.m_denom; 
-    int b = thistmp.m_denom * rtmp.m_num;
-
-    return a > b;*/
-
     return m_num * r.m_denom > r.m_num * m_denom;
-
  
 }
 
 
 bool Ratio::operator<(const Ratio &r) const {
-
-    /*Ratio rtmp = r;
-    rtmp.reduce();
-
-    Ratio thistmp = *this; 
-    thistmp.reduce();
-
-    int a = thistmp.m_num * rtmp.m_denom; 
-    int b = thistmp.m_denom * rtmp.m_num;
-
-    return a < b;*/
 
     return m_num * r.m_denom < r.m_num * m_denom;
 
@@ -185,28 +155,12 @@ bool Ratio::operator<(const Ratio &r) const {
 
 bool Ratio::operator<=(const Ratio &r) const {
 
-    /*Ratio rtmp = r;
-    rtmp.reduce();
-
-    Ratio thistmp = *this; 
-    thistmp.reduce();
-
-    return ( (thistmp < rtmp) || (thistmp == rtmp) );*/
-
     return (m_num * r.m_denom < r.m_num * m_denom) || ((*this) == r) ;
 
 }
 
 
 bool Ratio::operator>=(const Ratio &r) const {
-
-    /*Ratio rtmp = r;
-    rtmp.reduce();
-
-    Ratio thistmp = *this; 
-    thistmp.reduce();
-
-    return ( (thistmp > rtmp) || (thistmp == rtmp) );*/
 
     return (m_num * r.m_denom > r.m_num * m_denom) || ((*this) == r) ;
 

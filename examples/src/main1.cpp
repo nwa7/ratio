@@ -57,5 +57,11 @@ int main() {
     std::cout << "abs(k) = ";
     l.displayRatio();
 
+    Ratio m(-7,2);
+    std::cout << "m = "; 
+    m.displayRatio();
+    std::cout << "|m| = " << m.ratio_intpart() << std::endl;
+
+
     return 0;
 }

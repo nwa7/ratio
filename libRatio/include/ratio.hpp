@@ -24,7 +24,7 @@ class Ratio{
 
     Ratio ratio_sqrt() const ;
     Ratio ratio_abs() const;
-
+    int ratio_intpart() const;
     Ratio inverse() const;
     
     bool operator==(const Ratio &r) const;
