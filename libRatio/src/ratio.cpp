@@ -31,7 +31,6 @@ int Ratio::getDenom(){
 }
 
 
-
 Ratio Ratio::operator+(const Ratio &r) const {
 
     Ratio result; 
@@ -87,15 +86,22 @@ Ratio Ratio::operator-() const {
     return result;
 }
 
+
+//gerer negatif
 Ratio Ratio::inverse() const {
     
-    if(m_num == 0){
+    /*if(m_num == 0){
         return *this;
+    }*/
+
+    if(m_num<0){
+         Ratio result(-m_denom, -m_num);
     }
 
     Ratio result(m_denom, m_num);
     return result;
 }
+
 
 ///plutot convertir en reel puis faire sqrt et ensuite reconvertir en ratio
 ///a faire quand on aura la fonction de conversion
@@ -163,5 +169,34 @@ bool Ratio::operator<=(const Ratio &r) const {
 bool Ratio::operator>=(const Ratio &r) const {
 
     return (m_num * r.m_denom > r.m_num * m_denom) || ((*this) == r) ;
+
+}
+
+Ratio Ratio::convert_float_to_ratio(double x, const unsigned int nb_iter){
+    Ratio result;
+    int q;
+    if(x==0){
+        //result.m_num=0;
+        //result.m_denom=1; 
+        Ratio result(0,1);
+        return result;
+    }
+
+    if(nb_iter==0){
+        //result.m_num=0;
+        //result.m_denom=1; 
+        Ratio result(0,1);
+        return result;
+    }
+
+    if(x<1.){
+        return convert_float_to_ratio(1/x,nb_iter).inverse();
+    }
+
+    if(x >= 1){
+        q = (int) x;
+        Ratio quotient(q,1);
+        return quotient + convert_float_to_ratio(x-q, nb_iter -1);
+    }
 
 }

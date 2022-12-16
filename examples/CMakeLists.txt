@@ -12,7 +12,7 @@ file(GLOB_RECURSE src_files_list src/*.cpp)
 
 # for each sample file, make an exe
 foreach(src_file ${src_files_list})
-
+ 
     get_filename_component(file_exe ${src_file} NAME_WE)    # define te name of the app (filename Without Extension)
     add_executable(${file_exe} ${src_file})                 # file to compile and name of the app
     target_link_libraries(${file_exe} PRIVATE ratio)      # lib dependency

@@ -34,4 +34,5 @@ class Ratio{
     bool operator>=(const Ratio &r) const;
     bool operator<=(const Ratio &r) const;
 
+    Ratio convert_float_to_ratio(double x, const unsigned int nb_iter);
 };
