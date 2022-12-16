@@ -3,7 +3,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = VectorD
+PROJECT_NAME           = Ratio_Laurence W._Elia R. test
 PROJECT_NUMBER         = 
 OUTPUT_DIRECTORY       = doc-doxygen
 CREATE_SUBDIRS         = NO
@@ -24,7 +24,7 @@ ABBREVIATE_BRIEF       = "The $name class" \
 ALWAYS_DETAILED_SEC    = YES
 INLINE_INHERITED_MEMB  = NO
 FULL_PATH_NAMES        = YES
-STRIP_FROM_PATH        = @VectorD_SOURCE_DIR@/
+STRIP_FROM_PATH        = 
 STRIP_FROM_INC_PATH    =
 SHORT_NAMES            = NO
 JAVADOC_AUTOBRIEF      = NO

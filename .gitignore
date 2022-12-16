@@ -1,2 +1,5 @@
 build/
 .cache/
+/libRatio/doc/
+!/libRatio/doc/CMakeLists.txt
+!/Doxyfile-html.cmake
