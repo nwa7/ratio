@@ -1,9 +1,10 @@
 
 #---------------------------------------------------------------------------
 # Project related configuration options
+# firefox index.html pour ouvrir
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = Ratio_Laurence W._Elia R. test
+PROJECT_NAME           = Ratio_Laurence W._Elia R.
 PROJECT_NUMBER         = 
 OUTPUT_DIRECTORY       = doc-doxygen
 CREATE_SUBDIRS         = NO
