@@ -31,6 +31,13 @@ int Ratio::getDenom(){
    return m_denom;
 }
 
+void Ratio::setNum(int num){
+   (*this).m_num = num;
+}
+
+void Ratio::setDenom(unsigned int denom){
+   (*this).m_denom = denom;
+}
 
 Ratio Ratio::operator+(const Ratio &r) const {
 
@@ -65,6 +72,20 @@ Ratio Ratio::operator*(const Ratio &r) const {
 
     result.reduce();
 
+    return result;
+}
+
+Ratio Ratio::operator*(const float &x) const { // à bosser dans le cas où le nombre à virgule serait infini
+    Ratio result; 
+    uint mantissa=1;
+    result.m_num = m_num*x;
+    while (m_num*mantissa < 0){
+        mantissa *=10;
+    }
+    result.setNum(m_num * mantissa);
+    result.setDenom(m_denom * mantissa);
+
+    result.reduce();
     return result;
 }
 
