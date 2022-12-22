@@ -3,6 +3,7 @@
 #include <numeric>
 #include <cmath>
 
+
 Ratio::Ratio(const int num, const unsigned int denom): m_num(num), m_denom(denom){}
 
 Ratio::Ratio(const Ratio &r):m_num(r.m_num), m_denom(r.m_denom){}
