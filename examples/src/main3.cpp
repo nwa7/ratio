@@ -29,6 +29,9 @@ int main(){
     std::cout << "b = ";
     b.displayRatio();
 
+    std::cout << b*2<< std::endl;
+    //std::cout << b*0.5<< std::endl; = soucis je planche dessus quand je peux
+
     Ratio b_square1 = b.ratio_pow(3);
     std::cout << "std::sqrt(b) = ";
     b_square1.displayRatio();
@@ -36,5 +39,9 @@ int main(){
     Ratio b_square2 = b.ratio_pow(3);
     std::cout << "Ratio::sqrt(b) = ";
     b_square2.displayRatio();
+
+    std::cout << b.ratio_pow(3) << std::endl;
+
+
 
 }

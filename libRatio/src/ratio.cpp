@@ -27,11 +27,11 @@ void Ratio::reduce(){
     }
 }
 
-int Ratio::getNum(){
+int Ratio::getNum() const{
    return m_num;
 }
 
-int Ratio::getDenom(){
+int Ratio::getDenom() const{
    return m_denom;
 }
 
@@ -81,8 +81,27 @@ Ratio Ratio::operator*(const Ratio &r) const {
 
 
 /*VOIR SI POSSIBLE DE REUNIR LES DEUX * INT ET FLOAT DANS UN TEMPLATE ?*/
+/* J'ai essayé mais laissé les fonctions telles quelles en dessous au cas où problème */
+
+template<typename T>
+Ratio Ratio::operator*(const T &n) const {
+    Ratio result; 
+    uint mantissa = 1;
+    double multiplied = m_num*n;
+    while (multiplied*mantissa != (int)(multiplied*mantissa)){
+        mantissa *=10;
+    }
+    result.setNum(multiplied * mantissa);
+    result.setDenom(m_denom * mantissa);
+
+    result.reduce();
+
+    return result;
+}
 
 
+
+#if 0 
 Ratio Ratio::operator*(const int &n) const {
 
     Ratio result; 
@@ -100,16 +119,17 @@ Ratio Ratio::operator*(const float &x) const { // à bosser dans le cas où le n
     Ratio result; 
     uint mantissa=1;
     result.m_num = m_num*x;
-    while (m_num*mantissa < 0){
+    double multiplied = m_num*n;
+    while (multiplied*mantissa != (int)(multiplied*mantissa)){
         mantissa *=10;
     }
-    result.setNum(m_num * mantissa);
+    result.setNum(multiplied * mantissa);
     result.setDenom(m_denom * mantissa);
 
     result.reduce();
     return result;
 }
-
+#endif
 
 Ratio Ratio::operator/(const Ratio &r) const {
 
@@ -310,4 +330,11 @@ Ratio Ratio::best_convert_float_to_ratio(double x, const unsigned int max_nb_ite
 
 double Ratio::convert_to_float() const {
    return (double) m_num/m_denom;
+}
+
+std::ostream& operator<< (std::ostream& stream, const Ratio &r) {		
+    stream << r.getNum();
+    stream << "/";
+    stream << r.getDenom();
+	return stream;
 }

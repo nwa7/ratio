@@ -1,5 +1,5 @@
 #pragma once 
-
+#include <iostream>
 
 
 // Doxygen menu
@@ -63,10 +63,10 @@ class Ratio{
     void reduce();
     
 	/// \brief getter numerator
-    int getNum();
+    int getNum() const;
 
 	/// \brief getter denominator
-    int getDenom();
+    int getDenom() const;
 
 	/// \brief setter numerator
     void setNum(int num);
@@ -83,12 +83,17 @@ class Ratio{
 	/// \brief product *this and r
     Ratio operator*(const Ratio &r) const;
 
+	template<typename T>
+	Ratio operator*(const T &n) const;
+
+	#if 0
 	/// \brief product *this and f
 	/// \param x : float
     Ratio operator*(const float &x) const;
 
 	/// \brief product *this and n
 	Ratio operator*(const int &n) const;
+	#endif
 
 	/// \brief division of *this by r
     Ratio operator/(const Ratio &r) const;
@@ -145,3 +150,7 @@ class Ratio{
 
 	double convert_to_float() const;
 };
+
+	/// \brief overload the operator << for Ratio
+    /// \param stream : input stream
+    std::ostream& operator<< (std::ostream& stream, const Ratio& r);
