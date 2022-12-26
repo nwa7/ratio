@@ -29,12 +29,66 @@ int main(){
     std::cout << "b = ";
     b.displayRatio();
 
-    Ratio b_square1 = b.ratio_pow(3);
-    std::cout << "std::sqrt(b) = ";
-    b_square1.displayRatio();
+    Ratio b_pow = b.ratio_pow(3);
+    std::cout << "Ratio::pow(b) = ";
+    b_pow.displayRatio();
 
-    Ratio b_square2 = b.ratio_pow(3);
-    std::cout << "Ratio::sqrt(b) = ";
-    b_square2.displayRatio();
+    Ratio b_pow2 = b.ratio_pow2(3);
+    std::cout << "std::pow(b) = ";
+    b_pow2.displayRatio();
 
+
+    Ratio c(121,256);
+    std::cout << "c = ";
+    c.displayRatio();
+
+    Ratio c_sqrt = c.ratio_sqrt();
+    std::cout << "Ratio::sqrt(c) = ";
+    c_sqrt.displayRatio();
+    
+    Ratio c_sqrt2 = c.ratio_sqrt2();
+    std::cout << "std::sqrt(c) = ";
+    c_sqrt2.displayRatio();
+
+    Ratio d(8,3);
+    std::cout << "d = ";
+    d.displayRatio();
+
+    Ratio d_exp = d.ratio_exp();
+    std::cout << "Ratio::exp(d) = ";
+    d_exp.displayRatio();
+    
+    Ratio d_exp2 = d.ratio_exp2();
+    std::cout << "std::exp(d) = ";
+    d_exp2.displayRatio();
+
+    d_exp2 = d + c;
+    d_exp2.displayRatio();
+
+    Ratio e(7,2);
+    std::cout << "e = ";
+    e.displayRatio();
+
+    Ratio e_sin = e.ratio_sin();
+    std::cout << "Ratio::sin(e) = ";
+    e_sin.displayRatio();
+
+
+    Ratio e_sin2 = e.ratio_sin2();
+    std::cout << "std::sin(e) = ";
+    e_sin2.displayRatio();
+
+
+    Ratio f(3,2);
+    std::cout << "f = ";
+    f.displayRatio();
+
+    Ratio f_cos = f.ratio_cos();
+    std::cout << "Ratio::cos(f) = ";
+    f_cos.displayRatio();
+
+
+    Ratio f_cos2 = f.ratio_cos2();
+    std::cout << "std::cos2(f) = ";
+    f_cos2.displayRatio();
 }
