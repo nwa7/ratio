@@ -269,7 +269,7 @@ Ratio Ratio::ratio_pow(const double &n) const{
 }*/
 
 template<typename T>
-T Ratio::horner(const T &x) const{
+T Ratio::real_ratio_exp(const T &x) const{
 
     const T x0 = std::abs(x);
 
@@ -285,7 +285,7 @@ T Ratio::horner(const T &x) const{
 
 Ratio Ratio::ratio_exp() const{
 
-    double float_exp = horner(this->convert_to_float());
+    double float_exp = real_ratio_exp(this->convert_to_float());
     return best_convert_float_to_ratio(float_exp, 100, 0.000001);
 
 

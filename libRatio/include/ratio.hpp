@@ -128,7 +128,7 @@ class Ratio{
 	Ratio ratio_exp() const;
 
 	template<typename T>
-	T horner(const T &x) const;
+	T real_ratio_exp(const T &x) const;
 
 	Ratio ratio_exp2() const;
 
