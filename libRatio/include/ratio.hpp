@@ -74,6 +74,9 @@ class Ratio{
 	/// \brief setter denominator
     void setDenom(unsigned int denom);
 
+
+	Ratio& operator=(const Ratio &r);
+
 	/// \brief sum of *this and r
     Ratio operator+(const Ratio &r) const;
 
@@ -98,21 +101,59 @@ class Ratio{
 	/// \brief division of *this by r
     Ratio operator/(const Ratio &r) const;
 
+
+	Ratio& operator+=(const Ratio &r);
+	Ratio& operator-=(const Ratio &r);
+	Ratio& operator*=(const Ratio &r);
+	Ratio& operator/=(const Ratio &r);
+
 	/// \brief unary minus
     Ratio operator-() const;
+
 
 	/// \brief square root of *this
     Ratio ratio_sqrt() const ;
 
-	/// \brief power of *this
-    Ratio ratio_pow(const int &p) const ;
+	/// \brief real implementation of square root on double
+    double real_ratio_sqrt(const double &n) const ;
+
+	/// \brief square root of *this
+    Ratio ratio_sqrt2() const ;
 
 
 	/// \brief power of *this
-    Ratio ratio_pow2(const int &p) const ;
+    Ratio ratio_pow2(const int &n) const ;
+
+
+	/// \brief power of *this
+    Ratio ratio_pow(const double &n) const ;
+
+	/// \brief exponential of *this
+    
+	Ratio ratio_exp() const;
+
+	template<typename T>
+	T real_ratio_exp(const T &x) const;
+
+	Ratio ratio_exp2() const;
 
 	/// \brief return *this with an absolute numerator
     Ratio ratio_abs() const;
+
+	template<typename T>
+	T real_ratio_sin(const T &x) const;
+
+	Ratio ratio_sin() const;
+
+	Ratio ratio_sin2() const;
+
+
+	template<typename T>
+	T real_ratio_cos(const T &x) const;
+
+	Ratio ratio_cos() const;
+
+	Ratio ratio_cos2() const;
 
 	/// \brief return euclide division of numerator divised by denominator
     int ratio_intpart() const;
