@@ -114,46 +114,50 @@ class Ratio{
 	/// \brief square root of *this
     Ratio ratio_sqrt() const ;
 
-	/// \brief real implementation of square root on double
+	/// \brief real implementation of square root using Newton aproach
     double real_ratio_sqrt(const double &n) const ;
 
-	/// \brief square root of *this
+	/// \brief square root of *this using std
     Ratio ratio_sqrt2() const ;
-
-
-	/// \brief power of *this
-    Ratio ratio_pow2(const int &n) const ;
-
 
 	/// \brief power of *this
     Ratio ratio_pow(const double &n) const ;
 
+	/// \brief power of *this using std
+    Ratio ratio_pow2(const int &n) const ;
+
 	/// \brief exponential of *this
-    
 	Ratio ratio_exp() const;
 
+	/// \brief real implementation of exponential using Horner
 	template<typename T>
 	T real_ratio_exp(const T &x) const;
 
+	/// \brief exponential of *this using std
 	Ratio ratio_exp2() const;
 
-	/// \brief return *this with an absolute numerator
-    Ratio ratio_abs() const;
+	/// \brief sin of *this 
+	Ratio ratio_sin() const;
 
+	/// \brief real implementation of sin using Taylor series
 	template<typename T>
 	T real_ratio_sin(const T &x) const;
 
-	Ratio ratio_sin() const;
-
+	/// \brief sin of *this using std
 	Ratio ratio_sin2() const;
 
+	/// \brief cos of *this
+	Ratio ratio_cos() const;
 
+	/// \brief real implementation of cos using Taylor series
 	template<typename T>
 	T real_ratio_cos(const T &x) const;
 
-	Ratio ratio_cos() const;
-
+	/// \brief cos of *this using std
 	Ratio ratio_cos2() const;
+
+	/// \brief return *this with an absolute numerator
+    Ratio ratio_abs() const;
 
 	/// \brief return euclide division of numerator divised by denominator
     int ratio_intpart() const;

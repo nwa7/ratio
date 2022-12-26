@@ -40,7 +40,7 @@ int main(){
     std::cout << "std::pow(b) = ";
     b_pow2.displayRatio();
 
-    std::cout << b.ratio_pow(3) << std::endl;
+    std::cout << b.ratio_exp() << std::endl;
 
     Ratio c(121,256);
     std::cout << "c = ";

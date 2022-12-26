@@ -201,7 +201,7 @@ Ratio Ratio::ratio_sqrt2() const {
 
 }
 
-
+//Newton 
 double Ratio::real_ratio_sqrt(const double &n) const {
 
    const double PRECISION = 0.00000001;
