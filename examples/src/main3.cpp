@@ -28,7 +28,7 @@ int main(){
     std::cout << "b = ";
     b.displayRatio();
 
-    //std::cout << "b*2=" << b*2<< std::endl;
+    std::cout << "b*2=" << b*2<< std::endl;
     //std::cout << b*0.5<< std::endl; = soucis je planche dessus quand je peux
 
     Ratio<int> b_pow = b.ratio_pow(3);
@@ -95,5 +95,3 @@ int main(){
     std::cout << "std::cos2(f) = ";
     f_cos2.displayRatio();
 }
-
-template class Ratio<int>;

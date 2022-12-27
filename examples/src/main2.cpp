@@ -4,15 +4,15 @@
 
 int main(){
 
-    Ratio a(1,2);
+    Ratio<int> a(1,2);
     std::cout << "a = "; 
     a.displayRatio();
 
-    Ratio b(3,4);
+    Ratio<int> b(3,4);
     std::cout << "b = ";
     b.displayRatio();
 
-    Ratio c = a;
+    Ratio<int> c = a;
 
     if(a == b){
         std::cout << "error a != b" << std::endl;

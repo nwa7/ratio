@@ -515,10 +515,7 @@ double Ratio<R>::convert_to_float() const {
    return (double) m_num/m_denom;
 }
 
-template<typename R>
-std::ostream& operator<< (std::ostream& stream, const Ratio<R> &r) {		
-    stream << r.getNum() << "/" << r.getDenom();
-	return stream;
-}
+
 
 template class Ratio<int>;
+template class Ratio<long int>;

@@ -11,7 +11,7 @@
 // constructors
 
 TEST (RatioConstructor, defaultConstructor) { 
-	Ratio r;
+	Ratio<int> r;
 	ASSERT_EQ (r.getDenom(), 1);
 }
 
@@ -25,8 +25,8 @@ TEST (RatioConstructor, copyConstructor) {
     auto gen = std::bind(uniformDistributionValue, myGenerator);
 
     for(int run=0; run<100; ++run){
-        Ratio r1(gen(),gen());
-        Ratio r2(r1);
+        Ratio<int> r1(gen(),gen());
+        Ratio<int> r2(r1);
         r1.displayRatio();
         ASSERT_EQ (r1.getNum(), r2.getNum());
         ASSERT_EQ (r1.getDenom(), r2.getDenom());

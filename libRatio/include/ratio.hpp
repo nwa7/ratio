@@ -191,7 +191,10 @@ class Ratio{
 	/// \brief overload the operator << for Ratio
     /// \param stream : input stream
 	template<typename R>
-    std::ostream& operator<< (std::ostream& stream, const Ratio<R> &r);
+	std::ostream& operator<< (std::ostream& stream, const Ratio<R> &r) {		
+    	stream << r.getNum() << "/" << r.getDenom();
+		return stream;
+	}
 		
 	template<typename R, typename T>
 	Ratio<R> operator*(const T &n, const Ratio<R> &r);
