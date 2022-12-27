@@ -20,11 +20,15 @@ void Ratio::displayRatio() const {
 }
 
 void Ratio::reduce(){
-    int pgcd = std::gcd(m_num, m_denom);
-    if(pgcd != 0){
-    m_num = m_num/pgcd;
-    m_denom = m_denom/pgcd;     
-    }
+    if (this->getNum() == 0){
+        this->setNum(0);
+        this->setDenom(1);
+    }           
+    else {
+        int pgcd = std::gcd(m_num, m_denom);
+        this->setNum(m_num/pgcd);
+        this->setDenom(m_denom/pgcd);     
+    }     
 }
 
 int Ratio::getNum() const{
@@ -90,56 +94,29 @@ Ratio Ratio::operator*(const Ratio &r) const {
 }
 
 
-/*VOIR SI POSSIBLE DE REUNIR LES DEUX * INT ET FLOAT DANS UN TEMPLATE ?*/
-/* J'ai essayé mais laissé les fonctions telles quelles en dessous au cas où problème */
-
 template<typename T>
 Ratio Ratio::operator*(const T &n) const {
     Ratio result; 
-    uint mantissa = 1;
-    double multiplied = m_num*n;
-    while (multiplied*mantissa != (int)(multiplied*mantissa)){
-        mantissa *=10;
+    if (m_num*n == (int)(m_num*n)){
+        result.setNum(m_num*n);
+        result.setDenom(m_denom);
     }
-    result.setNum(multiplied * mantissa);
-    result.setDenom(m_denom * mantissa);
-
-    result.reduce();
-
-    return result;
-}
-
-
-
-#if 0 
-Ratio Ratio::operator*(const int &n) const {
-
-    Ratio result; 
-
-    result.m_num = m_num*n;
-    result.m_denom = m_denom;
-
-    result.reduce();
-
-    return result;
-}
-
-
-Ratio Ratio::operator*(const float &x) const { // à bosser dans le cas où le nombre à virgule serait infini
-    Ratio result; 
-    uint mantissa=1;
-    result.m_num = m_num*x;
-    double multiplied = m_num*n;
-    while (multiplied*mantissa != (int)(multiplied*mantissa)){
-        mantissa *=10;
+    else {
+        Ratio converted = convert_float_to_ratio(n, 10, 0.5);
+        result.setNum(m_num * converted.getNum());
+        result.setDenom(m_denom * converted.getDenom());
     }
-    result.setNum(multiplied * mantissa);
-    result.setDenom(m_denom * mantissa);
 
     result.reduce();
+
     return result;
 }
-#endif
+
+template<typename T>
+Ratio operator*(const T &n, const Ratio &r){
+    return r*n;
+}
+
 
 Ratio Ratio::operator/(const Ratio &r) const {
 

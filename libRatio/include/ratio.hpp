@@ -89,15 +89,6 @@ class Ratio{
 	template<typename T>
 	Ratio operator*(const T &n) const;
 
-	#if 0
-	/// \brief product *this and f
-	/// \param x : float
-    Ratio operator*(const float &x) const;
-
-	/// \brief product *this and n
-	Ratio operator*(const int &n) const;
-	#endif
-
 	/// \brief division of *this by r
     Ratio operator/(const Ratio &r) const;
 
@@ -199,3 +190,6 @@ class Ratio{
 	/// \brief overload the operator << for Ratio
     /// \param stream : input stream
     std::ostream& operator<< (std::ostream& stream, const Ratio& r);
+		
+	template<typename T>
+	Ratio operator*(const T &n, const Ratio &r);
