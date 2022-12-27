@@ -87,8 +87,24 @@ class Ratio{
 	/// \brief product *this and r
     Ratio<R> operator*(const Ratio &r) const;
 
+
 	template<typename T>
-	Ratio<R> operator*(const T &n) const;
+	Ratio<R> operator*(const T &n) const {
+		Ratio<R> result; 
+		if (m_num*n == (int)(m_num*n)){
+			result.setNum(m_num*n);
+			result.setDenom(m_denom);
+		}
+		else {
+			Ratio converted = convert_float_to_ratio(n, 4 , 0.01);
+			result.setNum(m_num * converted.getNum());
+			result.setDenom(m_denom * converted.getDenom());
+		}
+
+		result.reduce();
+
+		return result;
+	}
 
 	/// \brief division of *this by r
     Ratio<R> operator/(const Ratio &r) const;
@@ -197,4 +213,6 @@ class Ratio{
 	}
 		
 	template<typename R, typename T>
-	Ratio<R> operator*(const T &n, const Ratio<R> &r);
+	Ratio<R> operator*(const T &n, const Ratio<R> &r){
+		return r*n;
+	}

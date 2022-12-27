@@ -29,7 +29,8 @@ int main(){
     b.displayRatio();
 
     std::cout << "b*2=" << b*2<< std::endl;
-    //std::cout << b*0.5<< std::endl; = soucis je planche dessus quand je peux
+    std::cout << "b*2=" << 2*b<< std::endl;
+    std::cout << "b*2.33333="<< b*2.33333<< std::endl; 
 
     Ratio<int> b_pow = b.ratio_pow(3);
     std::cout << "Ratio::pow(b) = ";
@@ -39,7 +40,7 @@ int main(){
     std::cout << "std::pow(b) = ";
     b_pow2.displayRatio();
 
-    //std::cout << b.ratio_exp() << std::endl;
+    std::cout << b.ratio_exp() << std::endl;
 
     Ratio<int> c(121,256);
     std::cout << "c = ";
