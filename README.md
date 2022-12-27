@@ -4,7 +4,7 @@ The purpose of this library is to represent float numbers as rational numbers (a
 
 If you'd like to know more about this library you can read below, 
 
-<span style="color: red;">## Dependencies</span>
+## Dependencies
 
 Cmake (at least the 3.15 version)
 - Linux : sudo apt install cmake
