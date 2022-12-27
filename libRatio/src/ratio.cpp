@@ -4,22 +4,28 @@
 #include <cmath>
 
 
-Ratio::Ratio(const int num, const unsigned int denom): m_num(num), m_denom(denom){}
+template<typename R>
+Ratio<R>::Ratio(const R num, const R denom): m_num(num), m_denom(denom){}
 
-Ratio::Ratio(const Ratio &r):m_num(r.m_num), m_denom(r.m_denom){}
+template<typename R>
+Ratio<R>::Ratio(const Ratio<R>&r):m_num(r.m_num), m_denom(r.m_denom){}
 
-Ratio::Ratio(const double &x){
+
+template<typename R>
+Ratio<R>::Ratio(const double &x){
     m_num = convert_float_to_ratio(x,4,0.01).m_num;
     m_denom = convert_float_to_ratio(x,4,0.01).m_denom;
 }
 
-void Ratio::displayRatio() const {
+template<typename R>
+void Ratio<R>::displayRatio() const {
 
     std::cout << m_num << "/" << m_denom << std::endl;
     
 }
 
-void Ratio::reduce(){
+template<typename R>
+void Ratio<R>::reduce(){
     if (this->getNum() == 0){
         this->setNum(0);
         this->setDenom(1);
@@ -31,24 +37,29 @@ void Ratio::reduce(){
     }     
 }
 
-int Ratio::getNum() const{
+template<typename R>
+int Ratio<R>::getNum() const{
    return m_num;
 }
 
-int Ratio::getDenom() const{
+template<typename R>
+int Ratio<R>::getDenom() const{
    return m_denom;
 }
 
-void Ratio::setNum(int num){
+template<typename R>
+void Ratio<R>::setNum(R num){
    (*this).m_num = num;
 }
 
-void Ratio::setDenom(unsigned int denom){
+template<typename R>
+void Ratio<R>::setDenom(R denom){
    (*this).m_denom = denom;
 }
 
 
-Ratio& Ratio::operator=(const Ratio &r) {
+template<typename R>
+Ratio<R>& Ratio<R>::operator=(const Ratio<R> &r) {
 
     if(&r == this) return *this;
 
@@ -57,9 +68,10 @@ Ratio& Ratio::operator=(const Ratio &r) {
     return *this;
 }
 
-Ratio Ratio::operator+(const Ratio &r) const {
+template<typename R>
+Ratio<R> Ratio<R>::operator+(const Ratio<R> &r) const {
 
-    Ratio result; 
+    Ratio<R> result; 
 
     result.m_num = m_num*r.m_denom + m_denom*r.m_num;
     result.m_denom = m_denom * r.m_denom;
@@ -69,9 +81,10 @@ Ratio Ratio::operator+(const Ratio &r) const {
     return result;
 }
 
-Ratio Ratio::operator-(const Ratio &r) const {
+template<typename R>
+Ratio<R> Ratio<R>::operator-(const Ratio<R> &r) const {
 
-    Ratio result; 
+    Ratio<R> result; 
 
     result.m_num = m_num*r.m_denom - m_denom*r.m_num;
     result.m_denom = m_denom * r.m_denom;
@@ -81,9 +94,10 @@ Ratio Ratio::operator-(const Ratio &r) const {
     return result;
 }
 
-Ratio Ratio::operator*(const Ratio &r) const {
+template<typename R>
+Ratio<R> Ratio<R>::operator*(const Ratio<R> &r) const {
 
-    Ratio result; 
+    Ratio<R> result; 
 
     result.m_num = m_num*r.m_num;
     result.m_denom = m_denom * r.m_denom;
@@ -94,8 +108,9 @@ Ratio Ratio::operator*(const Ratio &r) const {
 }
 
 
+template<typename R>
 template<typename T>
-Ratio Ratio::operator*(const T &n) const {
+Ratio<R> Ratio<R>::operator*(const T &n) const {
     Ratio result; 
     if (m_num*n == (int)(m_num*n)){
         result.setNum(m_num*n);
@@ -112,13 +127,14 @@ Ratio Ratio::operator*(const T &n) const {
     return result;
 }
 
-template<typename T>
-Ratio operator*(const T &n, const Ratio &r){
+template<typename R, typename T>
+Ratio<R> operator*(const T &n, const Ratio<R> &r){
     return r*n;
 }
 
 
-Ratio Ratio::operator/(const Ratio &r) const {
+template<typename R>
+Ratio<R> Ratio<R>::operator/(const Ratio<R> &r) const {
 
     Ratio result; 
 
@@ -131,47 +147,55 @@ Ratio Ratio::operator/(const Ratio &r) const {
 }
 
 
-Ratio& Ratio::operator+=(const Ratio &r){
+template<typename R>
+Ratio<R>& Ratio<R>::operator+=(const Ratio<R> &r){
     *this = *this+r;
     return *this;
 }
 
-Ratio& Ratio::operator-=(const Ratio &r){
+template<typename R>
+Ratio<R>& Ratio<R>::operator-=(const Ratio<R> &r){
     *this = *this-r;
     return *this;
 }
 
-Ratio& Ratio::operator*=(const Ratio &r){
+template<typename R>
+Ratio<R>& Ratio<R>::operator*=(const Ratio<R> &r){
     *this = *this*r;
     return *this;
 }
 
-Ratio& Ratio::operator/=(const Ratio &r){
+template<typename R>
+Ratio<R>& Ratio<R>::operator/=(const Ratio<R> &r){
     *this = *this/r;
     return *this;
 }
 
-Ratio Ratio::operator-() const {
-    Ratio result;
+template<typename R>
+Ratio<R> Ratio<R>::operator-() const {
+    Ratio<R> result;
     result.m_num = -m_num;
     result.m_denom = m_denom;
     return result;
 }
 
 
-Ratio Ratio::inverse() const {
+template<typename R>
+Ratio<R> Ratio<R>::inverse() const {
 
     if(m_num<0){
-        Ratio result(-m_denom, -m_num);
+        Ratio<R> result(-m_denom, -m_num);
     }
 
-    Ratio result(m_denom, m_num);
+    Ratio<R> result(m_denom, m_num);
     return result;
 }
 
 
 ///voir si on peut le faire directement pour les cas simples ? mais jsp si on y gagne bcp vu qu'on rajoute du code idk
-Ratio Ratio::ratio_sqrt2() const {
+
+template<typename R>
+Ratio<R> Ratio<R>::ratio_sqrt2() const {
 
     double float_sqrt = std::sqrt(this->convert_to_float());
     return best_convert_float_to_ratio(float_sqrt, 100, 0.000001);
@@ -179,7 +203,8 @@ Ratio Ratio::ratio_sqrt2() const {
 }
 
 //Newton 
-double Ratio::real_ratio_sqrt(const double &n) const {
+template<typename R>
+double Ratio<R>::real_ratio_sqrt(const double &n) const {
 
    const double PRECISION = 0.00000001;
    double guess, newGuess; 
@@ -197,7 +222,8 @@ double Ratio::real_ratio_sqrt(const double &n) const {
 
 
 //gerer exception ici <0 
-Ratio Ratio::ratio_sqrt() const {
+template<typename R>
+Ratio<R> Ratio<R>::ratio_sqrt() const {
 
     if(m_num < 0){
         std::cout << "Cannot find square root of negative number"
@@ -210,9 +236,10 @@ Ratio Ratio::ratio_sqrt() const {
 }
 
 
-Ratio Ratio::ratio_pow2(const int &n) const{
+template<typename R>
+Ratio<R> Ratio<R>::ratio_pow2(const int &n) const{
 
-    Ratio result = *(this); 
+    Ratio<R> result = *(this); 
     result.m_num = std::pow(result.m_num, n);
     result.m_denom = std::pow(result.m_denom, n);
     
@@ -223,9 +250,10 @@ Ratio Ratio::ratio_pow2(const int &n) const{
 }
 
 
-Ratio Ratio::ratio_pow(const double &n) const{
+template<typename R>
+Ratio<R> Ratio<R>::ratio_pow(const double &n) const{
 
-    Ratio result;
+    Ratio<R> result;
     if ((int)n==0 || (m_num ==1 && m_denom ==1)){
         return result;
     }
@@ -233,11 +261,11 @@ Ratio Ratio::ratio_pow(const double &n) const{
         return *(this);
     }
     if((int)n%2==0){
-        Ratio calculPair = ratio_pow(n/2);
+        Ratio<R> calculPair = ratio_pow(n/2);
         return calculPair*calculPair;
     }
     else{ 
-        Ratio calculImpair = ratio_pow((n-1)/2);
+        Ratio<R> calculImpair = ratio_pow((n-1)/2);
         return (*this)*(calculImpair*calculImpair);
       
     }
@@ -245,8 +273,9 @@ Ratio Ratio::ratio_pow(const double &n) const{
 }
 
 
+template<typename R>
 template<typename T>
-T Ratio::real_ratio_exp(const T &x) const{
+T Ratio<R>::real_ratio_exp(const T &x) const{
 
     const T x0 = std::abs(x);
 
@@ -260,7 +289,8 @@ T Ratio::real_ratio_exp(const T &x) const{
 }
 
 
-Ratio Ratio::ratio_exp() const{
+template<typename R>
+Ratio<R> Ratio<R>::ratio_exp() const{
 
     double float_exp = real_ratio_exp(this->convert_to_float());
     return best_convert_float_to_ratio(float_exp, 100, 0.000001);
@@ -288,14 +318,16 @@ Ratio Ratio::ratio_exp() const{
 
 
 
-Ratio Ratio::ratio_exp2() const{
+template<typename R>
+Ratio<R> Ratio<R>::ratio_exp2() const{
     double float_exp = std::exp(this->convert_to_float());
     return best_convert_float_to_ratio(float_exp, 100, 0.000001);
 }
 
 //taylor series
+template<typename R>
 template<typename T>
-T Ratio::real_ratio_sin(const T &x) const{
+T Ratio<R>::real_ratio_sin(const T &x) const{
     T result(0);
     T ratio(1);
     for(unsigned int i=1; i<12; ++i){
@@ -307,20 +339,23 @@ T Ratio::real_ratio_sin(const T &x) const{
 }
 
 
-Ratio Ratio::ratio_sin() const{
+template<typename R>
+Ratio<R> Ratio<R>::ratio_sin() const{
     double float_sin = real_ratio_sin(this->convert_to_float());
     return best_convert_float_to_ratio(float_sin, 100, 0.000001);
 }
 
 
-Ratio Ratio::ratio_sin2() const{
+template<typename R>
+Ratio<R> Ratio<R>::ratio_sin2() const{
     double float_sin = std::sin(this->convert_to_float());
     return best_convert_float_to_ratio(float_sin, 100, 0.000001);
 }
 
 //taylor series
+template<typename R>
 template<typename T>
-T Ratio::real_ratio_cos(const T &x) const{
+T Ratio<R>::real_ratio_cos(const T &x) const{
     T result(0);
     T ratio(1);
     for(unsigned int i=1; i<12; ++i){
@@ -330,21 +365,24 @@ T Ratio::real_ratio_cos(const T &x) const{
     return result;
 }
 
-Ratio Ratio::ratio_cos() const{
+template<typename R>
+Ratio<R> Ratio<R>::ratio_cos() const{
     double float_cos = real_ratio_cos(this->convert_to_float());
     return best_convert_float_to_ratio(float_cos, 100, 0.000001);
 }
 
 
-Ratio Ratio::ratio_cos2() const{
+template<typename R>
+Ratio<R> Ratio<R>::ratio_cos2() const{
     double float_cos = std::cos(this->convert_to_float());
     return best_convert_float_to_ratio(float_cos, 100, 0.000001);
 }
 
 
 
-Ratio Ratio::ratio_abs() const {
-    Ratio result = *(this); 
+template<typename R>
+Ratio<R> Ratio<R>::ratio_abs() const {
+    Ratio<R> result = *(this); 
     
     if(result.m_num < 0){
         result.m_num = -result.m_num;
@@ -353,7 +391,8 @@ Ratio Ratio::ratio_abs() const {
     return result;
 }
 
-int Ratio::ratio_intpart() const {
+template<typename R>
+int Ratio<R>::ratio_intpart() const {
    int result = 0;
    if (m_denom != 0){
        result = static_cast<int>(m_num/(int)m_denom);
@@ -362,46 +401,53 @@ int Ratio::ratio_intpart() const {
 }
 
 
-bool Ratio::operator==(const Ratio &r) const {
+template<typename R>
+bool Ratio<R>::operator==(const Ratio<R> &r) const {
 
     return m_num * r.m_denom == r.m_num * m_denom;
 
 }
 
-bool Ratio::operator!=(const Ratio &r) const {
+template<typename R>
+bool Ratio<R>::operator!=(const Ratio<R> &r) const {
 
 
     return !((*this) == r);
 
 }
 
-bool Ratio::operator>(const Ratio &r) const {
+template<typename R>
+bool Ratio<R>::operator>(const Ratio<R> &r) const {
 
     return m_num * r.m_denom > r.m_num * m_denom;
  
 }
 
 
-bool Ratio::operator<(const Ratio &r) const {
+template<typename R>
+bool Ratio<R>::operator<(const Ratio<R> &r) const {
 
     return m_num * r.m_denom < r.m_num * m_denom;
 
 }
 
-bool Ratio::operator<=(const Ratio &r) const {
+template<typename R>
+bool Ratio<R>::operator<=(const Ratio<R> &r) const {
 
     return (m_num * r.m_denom < r.m_num * m_denom) || ((*this) == r) ;
 
 }
 
 
-bool Ratio::operator>=(const Ratio &r) const {
+template<typename R>
+bool Ratio<R>::operator>=(const Ratio<R> &r) const {
 
     return (m_num * r.m_denom > r.m_num * m_denom) || ((*this) == r) ;
 
 }
 
-double Ratio::compare_closest(const double &num, const double &a, const double &b) const {
+template<typename R>
+double Ratio<R>::compare_closest(const R &num, const double &a, const double &b) const {
     if(std::fabs(num-a) <= std::fabs(num-b)){
         return a;
     }
@@ -409,8 +455,9 @@ double Ratio::compare_closest(const double &num, const double &a, const double &
     return b;
 }
 
-Ratio Ratio::convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const {
-    Ratio result;
+template<typename R>
+Ratio<R> Ratio<R>::convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const {
+    Ratio<R> result;
     unsigned int nb_iter = max_nb_iter;
     int signe = 1;
     int q=0;
@@ -449,7 +496,8 @@ Ratio Ratio::convert_float_to_ratio(double x, const unsigned int max_nb_iter, co
     return result;
 }
 
-Ratio Ratio::best_convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const {
+template<typename R>
+Ratio<R> Ratio<R>::best_convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const {
     double result1 = convert_float_to_ratio(x,4, precision).convert_to_float();
     double result2 = convert_float_to_ratio(x,max_nb_iter, precision).convert_to_float();
 
@@ -462,13 +510,15 @@ Ratio Ratio::best_convert_float_to_ratio(double x, const unsigned int max_nb_ite
 }
 
 //gerer le cas division par 0
-double Ratio::convert_to_float() const {
+template<typename R>
+double Ratio<R>::convert_to_float() const {
    return (double) m_num/m_denom;
 }
 
-std::ostream& operator<< (std::ostream& stream, const Ratio &r) {		
-    stream << r.getNum();
-    stream << "/";
-    stream << r.getDenom();
+template<typename R>
+std::ostream& operator<< (std::ostream& stream, const Ratio<R> &r) {		
+    stream << r.getNum() << "/" << r.getDenom();
 	return stream;
 }
+
+template class Ratio<int>;

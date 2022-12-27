@@ -30,11 +30,12 @@
 /// \class Ratio
 /// \brief class defining a ratio, alternative way of defining a float number.
 
+template <typename R>
 class Ratio{
     private : 
-    int m_num;
-    unsigned int m_denom;
-    //double x;
+    R m_num;
+    R m_denom; /// -> doit être poz 
+
 	/// \brief Ratio is composed of two members : a numerator in int and a denominator in uint
 
 
@@ -43,12 +44,12 @@ class Ratio{
 	/// \brief constructor from a numerator & a denominator, return 1 in Ratio if called empty 
 	/// \param num : numerator
 	/// \param denom : denominator
-    Ratio(const int num = 1, const unsigned int denom =1);
+    Ratio(const R num = 1, const R denom = 1);
 
 
 	/// \brief copy constructor
 	/// \param r : Ratio
-    Ratio(const Ratio &r);
+    Ratio(const Ratio<R> &r);
 
 
 	Ratio(const double &x);
@@ -69,37 +70,37 @@ class Ratio{
     int getDenom() const;
 
 	/// \brief setter numerator
-    void setNum(int num);
+    void setNum(R num);
 
 	/// \brief setter denominator
-    void setDenom(unsigned int denom);
+    void setDenom(R denom);
 
 
 	Ratio& operator=(const Ratio &r);
 
 	/// \brief sum of *this and r
-    Ratio operator+(const Ratio &r) const;
+    Ratio<R> operator+(const Ratio<R> &r) const;
 
 	/// \brief substract r to *this 
-    Ratio operator-(const Ratio &r) const;
+    Ratio<R> operator-(const Ratio &r) const;
 
 	/// \brief product *this and r
-    Ratio operator*(const Ratio &r) const;
+    Ratio<R> operator*(const Ratio &r) const;
 
 	template<typename T>
-	Ratio operator*(const T &n) const;
+	Ratio<R> operator*(const T &n) const;
 
 	/// \brief division of *this by r
-    Ratio operator/(const Ratio &r) const;
+    Ratio<R> operator/(const Ratio &r) const;
 
 
-	Ratio& operator+=(const Ratio &r);
-	Ratio& operator-=(const Ratio &r);
-	Ratio& operator*=(const Ratio &r);
-	Ratio& operator/=(const Ratio &r);
+	Ratio<R>& operator+=(const Ratio &r);
+	Ratio<R>& operator-=(const Ratio &r);
+	Ratio<R>& operator*=(const Ratio &r);
+	Ratio<R>& operator/=(const Ratio &r);
 
 	/// \brief unary minus
-    Ratio operator-() const;
+    Ratio<R> operator-() const;
 
 
 	/// \brief square root of *this
@@ -145,16 +146,16 @@ class Ratio{
 	T real_ratio_cos(const T &x) const;
 
 	/// \brief cos of *this using std
-	Ratio ratio_cos2() const;
+	Ratio<R> ratio_cos2() const;
 
 	/// \brief return *this with an absolute numerator
-    Ratio ratio_abs() const;
+    Ratio<R> ratio_abs() const;
 
 	/// \brief return euclide division of numerator divised by denominator
     int ratio_intpart() const;
 
 	/// \brief return inverse of *this
-    Ratio inverse() const;
+    Ratio<R> inverse() const;
     
 	/// \brief test if *this and r are equal
     bool operator==(const Ratio &r) const;
@@ -175,7 +176,7 @@ class Ratio{
     bool operator<=(const Ratio &r) const;
 
 	/// \brief returns closest value to num
-	double compare_closest(const double &num, const double &a, const double &b) const;
+	double compare_closest(const R &num, const double &a, const double &b) const;
 
 	/// \brief convert float to ratio
 	/// \param max_nb_iter : number of iterations
@@ -189,7 +190,8 @@ class Ratio{
 
 	/// \brief overload the operator << for Ratio
     /// \param stream : input stream
-    std::ostream& operator<< (std::ostream& stream, const Ratio& r);
+	template<typename R>
+    std::ostream& operator<< (std::ostream& stream, const Ratio<R> &r);
 		
-	template<typename T>
-	Ratio operator*(const T &n, const Ratio &r);
+	template<typename R, typename T>
+	Ratio<R> operator*(const T &n, const Ratio<R> &r);
