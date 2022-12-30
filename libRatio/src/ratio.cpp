@@ -496,22 +496,21 @@ double Ratio<R>::convert_to_float() const {
 
 template<typename R>
 int Ratio<R>::digits_nb(double x) const{
-    int decimalPlaces = 0;
+    int count = 0;
     x = std::abs(x);
-    x = x - std::round(x);
-    //x = x - (int) x;
+    x = x-std::round(x);
 
     while (
         std::abs(x) - std::numeric_limits<float>::epsilon() > std::numeric_limits<float>::epsilon() && 
-        decimalPlaces <= std::numeric_limits<float>::digits10)
+        count <= std::numeric_limits<float>::digits10)
     {
        
         x = x * 10;
-        ++decimalPlaces;
+        count++;
         x = x - std::round(x);
     }
 
-    return decimalPlaces;
+    return count;
 }
 
 template class Ratio<int>;
