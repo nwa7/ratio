@@ -109,7 +109,6 @@ Ratio<R> Ratio<R>::operator*(const Ratio<R> &r) const {
 
 
 
-
 template<typename R>
 Ratio<R> Ratio<R>::operator/(const Ratio<R> &r) const {
 
@@ -175,7 +174,7 @@ template<typename R>
 Ratio<R> Ratio<R>::ratio_sqrt2() const {
 
     double float_sqrt = std::sqrt(this->convert_to_float());
-    return best_convert_float_to_ratio(float_sqrt, 100, 0.000001);
+    return best_convert_float_to_ratio(float_sqrt, 20, 0.01);
 
 }
 
@@ -208,7 +207,7 @@ Ratio<R> Ratio<R>::ratio_sqrt() const {
     }
 
     double float_sqrt = real_ratio_sqrt(this->convert_to_float());
-    return best_convert_float_to_ratio(float_sqrt, 100, 0.000001);
+    return best_convert_float_to_ratio(float_sqrt, 20, 0.01);
 
 }
 
@@ -270,7 +269,7 @@ template<typename R>
 Ratio<R> Ratio<R>::ratio_exp() const{
 
     double float_exp = real_ratio_exp(this->convert_to_float());
-    return best_convert_float_to_ratio(float_exp, 100, 0.000001);
+    return best_convert_float_to_ratio(float_exp, 20, 0.01);
 
 
     //J'ai essaye d'appliquer horner directement sur un ratio mais ça marche pas trop si tu veux tenter de le faire toi
@@ -298,7 +297,7 @@ Ratio<R> Ratio<R>::ratio_exp() const{
 template<typename R>
 Ratio<R> Ratio<R>::ratio_exp2() const{
     double float_exp = std::exp(this->convert_to_float());
-    return best_convert_float_to_ratio(float_exp, 100, 0.000001);
+    return best_convert_float_to_ratio(float_exp, 20, 0.01);
 }
 
 //taylor series
@@ -319,14 +318,14 @@ T Ratio<R>::real_ratio_sin(const T &x) const{
 template<typename R>
 Ratio<R> Ratio<R>::ratio_sin() const{
     double float_sin = real_ratio_sin(this->convert_to_float());
-    return best_convert_float_to_ratio(float_sin, 100, 0.000001);
+    return best_convert_float_to_ratio(float_sin, 20, 0.01);
 }
 
 
 template<typename R>
 Ratio<R> Ratio<R>::ratio_sin2() const{
     double float_sin = std::sin(this->convert_to_float());
-    return best_convert_float_to_ratio(float_sin, 100, 0.000001);
+    return best_convert_float_to_ratio(float_sin, 20, 0.01);
 }
 
 //taylor series
@@ -345,14 +344,14 @@ T Ratio<R>::real_ratio_cos(const T &x) const{
 template<typename R>
 Ratio<R> Ratio<R>::ratio_cos() const{
     double float_cos = real_ratio_cos(this->convert_to_float());
-    return best_convert_float_to_ratio(float_cos, 100, 0.000001);
+    return best_convert_float_to_ratio(float_cos, 20, 0.01);
 }
 
 
 template<typename R>
 Ratio<R> Ratio<R>::ratio_cos2() const{
     double float_cos = std::cos(this->convert_to_float());
-    return best_convert_float_to_ratio(float_cos, 100, 0.000001);
+    return best_convert_float_to_ratio(float_cos, 20, 0.01);
 }
 
 
@@ -434,7 +433,6 @@ double Ratio<R>::compare_closest(const R &num, const double &a, const double &b)
 
 template<typename R>
 Ratio<R> Ratio<R>::convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const {
-    Ratio<R> result;
     unsigned int nb_iter = max_nb_iter;
     int signe = 1;
     int q=0;
@@ -454,11 +452,15 @@ Ratio<R> Ratio<R>::convert_float_to_ratio(double x, const unsigned int max_nb_it
     }
 
     if(x<1.){
+
+        if(digits_nb(x) >= 7){
+        x = std::round(x * 1000.0) / 1000.0;
+        }
       
         return convert_float_to_ratio((double) 1/x,nb_iter, precision).inverse();
     }
 
-    if(x >= 1){
+    else{
        
        
         q = (int) x;
@@ -470,7 +472,7 @@ Ratio<R> Ratio<R>::convert_float_to_ratio(double x, const unsigned int max_nb_it
         return ((quotient + convert_float_to_ratio(x-q, nb_iter -1,precision))*signe);
     }
 
-    return result;
+    
 }
 
 template<typename R>
@@ -492,7 +494,25 @@ double Ratio<R>::convert_to_float() const {
    return (double) m_num/m_denom;
 }
 
+template<typename R>
+int Ratio<R>::digits_nb(double x) const{
+    int decimalPlaces = 0;
+    x = std::abs(x);
+    x = x - std::round(x);
+    //x = x - (int) x;
 
+    while (
+        std::abs(x) - std::numeric_limits<float>::epsilon() > std::numeric_limits<float>::epsilon() && 
+        decimalPlaces <= std::numeric_limits<float>::digits10)
+    {
+       
+        x = x * 10;
+        ++decimalPlaces;
+        x = x - std::round(x);
+    }
+
+    return decimalPlaces;
+}
 
 template class Ratio<int>;
 template class Ratio<long int>;

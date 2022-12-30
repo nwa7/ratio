@@ -1,6 +1,6 @@
 #pragma once 
 #include <iostream>
-
+#include <type_traits>
 
 // Doxygen menu
 /// \version 0.1
@@ -34,7 +34,8 @@ template <typename R>
 class Ratio{
     private : 
     R m_num;
-    R m_denom; /// -> doit être poz 
+	typedef typename std::make_unsigned<R>::type unsigned_r;
+    unsigned_r m_denom; 
 
 	/// \brief Ratio is composed of two members : a numerator in int and a denominator in uint
 
@@ -81,7 +82,7 @@ class Ratio{
 	Ratio& operator=(const Ratio &r);
 
 	/// \brief sum of *this and r
-    Ratio<R> operator+(const Ratio<R> &r) const;
+    Ratio<R> operator+(const Ratio &r) const;
 
 	/// \brief substract r to *this 
     Ratio<R> operator-(const Ratio &r) const;
@@ -215,11 +216,15 @@ class Ratio{
 	/// \brief convert ratio to float
 	double convert_to_float() const;
 
+
+	int digits_nb(double x) const;
+
+
 	/// \brief overload the operator << for Ratio
     /// \param stream : input stream
 	template<typename T>
 	friend std::ostream& operator<< (std::ostream& stream, const Ratio<T> &r);	
-    	
+
 };
 
 	template<typename R>
