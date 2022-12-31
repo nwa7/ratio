@@ -5,27 +5,7 @@
 
 
 template<typename R>
-constexpr Ratio<R>::Ratio(const R num, const R denom): m_num(num), m_denom(denom){}
-
-template<typename R>
-constexpr Ratio<R>::Ratio(const Ratio<R>&r):m_num(r.m_num), m_denom(r.m_denom){}
-
-
-template<typename R>
-constexpr Ratio<R>::Ratio(const double &x){
-    m_num = convert_float_to_ratio(x,4,0.01).m_num;
-    m_denom = convert_float_to_ratio(x,4,0.01).m_denom;
-}
-
-template<typename R>
-constexpr void Ratio<R>::displayRatio() const {
-
-    std::cout << m_num << "/" << m_denom << std::endl;
-    
-}
-
-template<typename R>
-constexpr void Ratio<R>::reduce(){
+void Ratio<R>::reduce(){
     if (this->getNum() == 0){
         this->setNum(0);
         this->setDenom(1);
@@ -38,28 +18,7 @@ constexpr void Ratio<R>::reduce(){
 }
 
 template<typename R>
-constexpr int Ratio<R>::getNum() const{
-   return m_num;
-}
-
-template<typename R>
-constexpr int Ratio<R>::getDenom() const{
-   return m_denom;
-}
-
-template<typename R>
-constexpr void Ratio<R>::setNum(R num){
-   (*this).m_num = num;
-}
-
-template<typename R>
-constexpr void Ratio<R>::setDenom(R denom){
-   (*this).m_denom = denom;
-}
-
-
-template<typename R>
-constexpr Ratio<R>& Ratio<R>::operator=(const Ratio<R> &r) {
+Ratio<R>& Ratio<R>::operator=(const Ratio<R> &r) {
 
     if(&r == this) return *this;
 
@@ -69,7 +28,7 @@ constexpr Ratio<R>& Ratio<R>::operator=(const Ratio<R> &r) {
 }
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::operator+(const Ratio<R> &r) const {
+Ratio<R> Ratio<R>::operator+(const Ratio<R> &r) const {
 
     Ratio<R> result; 
 
@@ -82,7 +41,7 @@ constexpr Ratio<R> Ratio<R>::operator+(const Ratio<R> &r) const {
 }
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::operator-(const Ratio<R> &r) const {
+Ratio<R> Ratio<R>::operator-(const Ratio<R> &r) const {
 
     Ratio<R> result; 
 
@@ -95,7 +54,7 @@ constexpr Ratio<R> Ratio<R>::operator-(const Ratio<R> &r) const {
 }
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::operator*(const Ratio<R> &r) const {
+Ratio<R> Ratio<R>::operator*(const Ratio<R> &r) const {
 
     Ratio<R> result; 
 
@@ -110,7 +69,7 @@ constexpr Ratio<R> Ratio<R>::operator*(const Ratio<R> &r) const {
 
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::operator/(const Ratio<R> &r) const {
+Ratio<R> Ratio<R>::operator/(const Ratio<R> &r) const {
 
     Ratio<R> result; 
 
@@ -122,33 +81,8 @@ constexpr Ratio<R> Ratio<R>::operator/(const Ratio<R> &r) const {
     return result;
 }
 
-
 template<typename R>
-constexpr Ratio<R>& Ratio<R>::operator+=(const Ratio<R> &r){
-    *this = *this+r;
-    return *this;
-}
-
-template<typename R>
-constexpr Ratio<R>& Ratio<R>::operator-=(const Ratio<R> &r){
-    *this = *this-r;
-    return *this;
-}
-
-template<typename R>
-constexpr Ratio<R>& Ratio<R>::operator*=(const Ratio<R> &r){
-    *this = *this*r;
-    return *this;
-}
-
-template<typename R>
-constexpr Ratio<R>& Ratio<R>::operator/=(const Ratio<R> &r){
-    *this = *this/r;
-    return *this;
-}
-
-template<typename R>
-constexpr Ratio<R> Ratio<R>::operator-() const {
+Ratio<R> Ratio<R>::operator-() const {
     Ratio<R> result;
     result.m_num = -m_num;
     result.m_denom = m_denom;
@@ -159,7 +93,7 @@ constexpr Ratio<R> Ratio<R>::operator-() const {
 ///voir si on peut le faire directement pour les cas simples ? mais jsp si on y gagne bcp vu qu'on rajoute du code idk
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::ratio_sqrt2() const {
+Ratio<R> Ratio<R>::ratio_sqrt2() const {
 
     double float_sqrt = std::sqrt(this->convert_to_float());
     return best_convert_float_to_ratio(float_sqrt, 20, 0.01);
@@ -168,7 +102,7 @@ constexpr Ratio<R> Ratio<R>::ratio_sqrt2() const {
 
 //Newton 
 template<typename R>
-constexpr double Ratio<R>::real_ratio_sqrt(const double &n) const {
+double Ratio<R>::real_ratio_sqrt(const double &n) const {
 
    const double PRECISION = 0.00000001;
    double guess = 0., newGuess = 0.; 
@@ -187,7 +121,7 @@ constexpr double Ratio<R>::real_ratio_sqrt(const double &n) const {
 
 //gerer exception ici <0 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::ratio_sqrt() const {
+Ratio<R> Ratio<R>::ratio_sqrt() const {
 
     if(m_num < 0){
         std::cout << "Cannot find square root of negative number"
@@ -201,7 +135,7 @@ constexpr Ratio<R> Ratio<R>::ratio_sqrt() const {
 
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::ratio_pow2(const int &n) const{
+Ratio<R> Ratio<R>::ratio_pow2(const int &n) const{
 
     Ratio<R> result = *(this); 
     result.m_num = std::pow(result.m_num, n);
@@ -215,7 +149,7 @@ constexpr Ratio<R> Ratio<R>::ratio_pow2(const int &n) const{
 
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::ratio_pow(const double &n) const{
+Ratio<R> Ratio<R>::ratio_pow(const double &n) const{
 
     Ratio<R> result;
     if ((int)n==0 || (m_num ==1 && m_denom ==1)){
@@ -239,7 +173,7 @@ constexpr Ratio<R> Ratio<R>::ratio_pow(const double &n) const{
 
 template<typename R>
 template<typename T>
-constexpr T Ratio<R>::real_ratio_exp(const T &x) const{
+T Ratio<R>::real_ratio_exp(const T &x) const{
 
     const T x0 = std::abs(x);
 
@@ -254,7 +188,7 @@ constexpr T Ratio<R>::real_ratio_exp(const T &x) const{
 
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::ratio_exp() const{
+Ratio<R> Ratio<R>::ratio_exp() const{
 
     double float_exp = real_ratio_exp(this->convert_to_float());
     return best_convert_float_to_ratio(float_exp, 20, 0.01);
@@ -283,7 +217,7 @@ constexpr Ratio<R> Ratio<R>::ratio_exp() const{
 
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::ratio_exp2() const{
+Ratio<R> Ratio<R>::ratio_exp2() const{
     double float_exp = std::exp(this->convert_to_float());
     return best_convert_float_to_ratio(float_exp, 20, 0.01);
 }
@@ -291,7 +225,7 @@ constexpr Ratio<R> Ratio<R>::ratio_exp2() const{
 //taylor series
 template<typename R>
 template<typename T>
-constexpr T Ratio<R>::real_ratio_sin(const T &x) const{
+T Ratio<R>::real_ratio_sin(const T &x) const{
     T result(0);
     T ratio(1);
     for(unsigned int i=1; i<12; ++i){
@@ -304,14 +238,14 @@ constexpr T Ratio<R>::real_ratio_sin(const T &x) const{
 
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::ratio_sin() const{
+Ratio<R> Ratio<R>::ratio_sin() const{
     double float_sin = real_ratio_sin(this->convert_to_float());
     return best_convert_float_to_ratio(float_sin, 20, 0.01);
 }
 
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::ratio_sin2() const{
+Ratio<R> Ratio<R>::ratio_sin2() const{
     double float_sin = std::sin(this->convert_to_float());
     return best_convert_float_to_ratio(float_sin, 20, 0.01);
 }
@@ -319,7 +253,7 @@ constexpr Ratio<R> Ratio<R>::ratio_sin2() const{
 //taylor series
 template<typename R>
 template<typename T>
-constexpr T Ratio<R>::real_ratio_cos(const T &x) const{
+T Ratio<R>::real_ratio_cos(const T &x) const{
     T result(0);
     T ratio(1);
     for(unsigned int i=1; i<12; ++i){
@@ -330,14 +264,14 @@ constexpr T Ratio<R>::real_ratio_cos(const T &x) const{
 }
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::ratio_cos() const{
+Ratio<R> Ratio<R>::ratio_cos() const{
     double float_cos = real_ratio_cos(this->convert_to_float());
     return best_convert_float_to_ratio(float_cos, 20, 0.01);
 }
 
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::ratio_cos2() const{
+Ratio<R> Ratio<R>::ratio_cos2() const{
     double float_cos = std::cos(this->convert_to_float());
     return best_convert_float_to_ratio(float_cos, 20, 0.01);
 }
@@ -345,7 +279,7 @@ constexpr Ratio<R> Ratio<R>::ratio_cos2() const{
 
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::ratio_abs() const {
+Ratio<R> Ratio<R>::ratio_abs() const {
     Ratio<R> result = *(this); 
     
     if(result.m_num < 0){
@@ -356,7 +290,7 @@ constexpr Ratio<R> Ratio<R>::ratio_abs() const {
 }
 
 template<typename R>
-constexpr int Ratio<R>::ratio_intpart() const {
+int Ratio<R>::ratio_intpart() const {
    int result = 0;
    if (m_denom != 0){
        result = static_cast<int>(m_num/(int)m_denom);
@@ -365,7 +299,7 @@ constexpr int Ratio<R>::ratio_intpart() const {
 }
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::inverse() const {
+Ratio<R> Ratio<R>::inverse() const {
 
     if(m_num<0){
         Ratio<R> result(-m_denom, -m_num);
@@ -375,55 +309,8 @@ constexpr Ratio<R> Ratio<R>::inverse() const {
     return result;
 }
 
-
-
 template<typename R>
-constexpr bool Ratio<R>::operator==(const Ratio<R> &r) const {
-
-    return m_num * r.m_denom == r.m_num * m_denom;
-
-}
-
-template<typename R>
-constexpr bool Ratio<R>::operator!=(const Ratio<R> &r) const {
-
-
-    return !((*this) == r);
-
-}
-
-template<typename R>
-constexpr bool Ratio<R>::operator>(const Ratio<R> &r) const {
-
-    return m_num * r.m_denom > r.m_num * m_denom;
- 
-}
-
-
-template<typename R>
-constexpr bool Ratio<R>::operator<(const Ratio<R> &r) const {
-
-    return m_num * r.m_denom < r.m_num * m_denom;
-
-}
-
-template<typename R>
-constexpr bool Ratio<R>::operator<=(const Ratio<R> &r) const {
-
-    return (m_num * r.m_denom < r.m_num * m_denom) || ((*this) == r) ;
-
-}
-
-
-template<typename R>
-constexpr bool Ratio<R>::operator>=(const Ratio<R> &r) const {
-
-    return (m_num * r.m_denom > r.m_num * m_denom) || ((*this) == r) ;
-
-}
-
-template<typename R>
-constexpr double Ratio<R>::compare_closest(const R &num, const double &a, const double &b) const {
+double Ratio<R>::compare_closest(const R &num, const double &a, const double &b) const {
     if(std::fabs(num-a) <= std::fabs(num-b)){
         return a;
     }
@@ -432,7 +319,7 @@ constexpr double Ratio<R>::compare_closest(const R &num, const double &a, const 
 }
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const {
+Ratio<R> Ratio<R>::convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const {
     unsigned int nb_iter = max_nb_iter;
     int signe = 1;
     int q=0;
@@ -476,7 +363,7 @@ constexpr Ratio<R> Ratio<R>::convert_float_to_ratio(double x, const unsigned int
 }
 
 template<typename R>
-constexpr Ratio<R> Ratio<R>::best_convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const {
+Ratio<R> Ratio<R>::best_convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const {
     double result1 = convert_float_to_ratio(x,4, precision).convert_to_float();
     double result2 = convert_float_to_ratio(x,max_nb_iter, precision).convert_to_float();
 
@@ -490,12 +377,12 @@ constexpr Ratio<R> Ratio<R>::best_convert_float_to_ratio(double x, const unsigne
 
 //gerer le cas division par 0
 template<typename R>
-constexpr double Ratio<R>::convert_to_float() const {
+double Ratio<R>::convert_to_float() const {
    return (double) m_num/m_denom;
 }
 
 template<typename R>
-constexpr int Ratio<R>::digits_nb(double x) const{
+int Ratio<R>::digits_nb(double x) const{
     int count = 0;
     x = std::abs(x);
     x = x-std::round(x);

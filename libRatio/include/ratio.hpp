@@ -45,56 +45,69 @@ class Ratio{
 	/// \brief constructor from a numerator & a denominator, return 1 in Ratio if called empty 
 	/// \param num : numerator
 	/// \param denom : denominator
-    constexpr Ratio(const R num = 1, const R denom = 1);
+	constexpr Ratio(const R num=1, const R denom=1): m_num(num), m_denom(denom){}
 
 
 	/// \brief copy constructor
 	/// \param r : Ratio
-    constexpr Ratio(const Ratio<R> &r);
+	constexpr Ratio(const Ratio<R>&r):m_num(r.m_num), m_denom(r.m_denom){}
 
 
 	/// \brief Ratio constructor from a float / int
 	/// \param x real
-	constexpr Ratio(const double &x);
+	constexpr Ratio(const double &x){
+    m_num = convert_float_to_ratio(x,4,0.01).m_num;
+    m_denom = convert_float_to_ratio(x,4,0.01).m_denom;
+	}
+
 
 	/// \brief default destructor
 	~Ratio()= default;
 	/* if destructor = default, automatically constexpr*/
 
 	/// \brief display num/denom
-   	constexpr void displayRatio() const;
+   	constexpr void displayRatio() const {
+    std::cout << m_num << "/" << m_denom << std::endl; 
+	}
 
 	/// \brief return the Ratio in irreducible form
-    constexpr void reduce();
+    void reduce();
     
 	/// \brief getter numerator
-    constexpr int getNum() const;
+	constexpr int getNum() const{
+   	return m_num;
+	}
 
 	/// \brief getter denominator
-    constexpr int getDenom() const;
+	constexpr int getDenom() const{
+   	return m_denom;
+	}
 
 	/// \brief setter numerator
-    constexpr void setNum(R num);
+    constexpr void setNum(R num){
+   (*this).m_num = num;
+	}
 
 	/// \brief setter denominator
-    constexpr void setDenom(R denom);
-
+	constexpr void setDenom(R denom){
+	(*this).m_denom = denom;
+	}
 	/// \brief copy a Ratio on another Ratio
-	constexpr Ratio& operator=(const Ratio &r);
+	Ratio& operator=(const Ratio &r);
 
 	/// \brief sum of *this and r
-    constexpr Ratio<R> operator+(const Ratio &r) const;
+    Ratio<R> operator+(const Ratio &r) const;
 
 	/// \brief substract r to *this 
-    constexpr Ratio<R> operator-(const Ratio &r) const;
+    Ratio<R> operator-(const Ratio &r) const;
 
 	/// \brief product *this and r
-    constexpr Ratio<R> operator*(const Ratio &r) const;
+    Ratio<R> operator*(const Ratio &r) const;
 
 
 	/// \brief product *this and a real
 	template<typename T>
-	constexpr Ratio<R> operator*(const T &n) const {
+	Ratio<R> operator*(const T &n) const {
 		Ratio<R> result; 
 		if (m_num*n == (int)(m_num*n)){
 			result.setNum(m_num*n);
@@ -112,113 +125,137 @@ class Ratio{
 	}
 
 	/// \brief division of *this by r
-    constexpr Ratio<R> operator/(const Ratio &r) const;
+    Ratio<R> operator/(const Ratio &r) const;
 
 
 	/// \brief shortcut operator doing this = this + r
-	constexpr Ratio<R>& operator+=(const Ratio &r);
+	constexpr Ratio<R>& operator+=(const Ratio &r){
+		*this = *this+r;
+		return *this;
+	};
 
 	/// \brief shortcut operator doing this = this - r
-	constexpr Ratio<R>& operator-=(const Ratio &r);
+	constexpr Ratio<R>& operator-=(const Ratio &r){
+		*this = *this-r;
+    	return *this;
+	};
 
 	/// \brief shortcut operator doing this = this * r
-	constexpr Ratio<R>& operator*=(const Ratio &r);
+	constexpr Ratio<R>& operator*=(const Ratio &r){
+		*this = *this*r;
+		return *this;
+	};
 
 	/// \brief shortcut operator doing this = this / r
-	constexpr Ratio<R>& operator/=(const Ratio &r);
+	constexpr Ratio<R>& operator/=(const Ratio &r){
+		*this = *this/r;
+		return *this;
+	};
 
 	/// \brief unary minus
-    constexpr Ratio<R> operator-() const;
+    Ratio<R> operator-() const;
 
 
 	/// \brief square root of *this
-    constexpr Ratio<R> ratio_sqrt() const ;
+   	Ratio<R> ratio_sqrt() const ;
 
 	/// \brief real implementation of square root using Newton aproach
-    constexpr double real_ratio_sqrt(const double &n) const ;
+    double real_ratio_sqrt(const double &n) const ;
 
 	/// \brief square root of *this using std
-    constexpr Ratio<R> ratio_sqrt2() const ;
+    Ratio<R> ratio_sqrt2() const ;
 
 	/// \brief power of *this
-    constexpr Ratio<R> ratio_pow(const double &n) const ;
+    Ratio<R> ratio_pow(const double &n) const ;
 
 	/// \brief power of *this using std
-    constexpr Ratio<R> ratio_pow2(const int &n) const ;
+    Ratio<R> ratio_pow2(const int &n) const ;
 
 	/// \brief exponential of *this
-	constexpr Ratio<R> ratio_exp() const;
+	Ratio<R> ratio_exp() const;
 
 	/// \brief real implementation of exponential using Horner
 	template<typename T>
-	constexpr T real_ratio_exp(const T &x) const;
+	T real_ratio_exp(const T &x) const;
 
 	/// \brief exponential of *this using std
-	constexpr Ratio<R> ratio_exp2() const;
+	Ratio<R> ratio_exp2() const;
 
 	/// \brief sin of *this 
-	constexpr Ratio<R> ratio_sin() const;
+	Ratio<R> ratio_sin() const;
 
 	/// \brief real implementation of sin using Taylor series
 	template<typename T>
-	constexpr T real_ratio_sin(const T &x) const;
+	T real_ratio_sin(const T &x) const;
 
 	/// \brief sin of *this using std
-	constexpr Ratio<R> ratio_sin2() const;
+	Ratio<R> ratio_sin2() const;
 
 	/// \brief cos of *this
-	constexpr Ratio<R> ratio_cos() const;
+	Ratio<R> ratio_cos() const;
 
 	/// \brief real implementation of cos using Taylor series
 	template<typename T>
-	constexpr T real_ratio_cos(const T &x) const;
+	T real_ratio_cos(const T &x) const;
 
 	/// \brief cos of *this using std
-	constexpr Ratio<R> ratio_cos2() const;
+	Ratio<R> ratio_cos2() const;
 
 	/// \brief return *this with an absolute numerator
-    constexpr Ratio<R> ratio_abs() const;
+    Ratio<R> ratio_abs() const;
 
 	/// \brief return euclide division of numerator divised by denominator
-    constexpr int ratio_intpart() const;
+    int ratio_intpart() const;
 
 	/// \brief return inverse of *this
-    constexpr Ratio<R> inverse() const;
+    Ratio<R> inverse() const;
     
 	/// \brief test if *this and r are equal
-    constexpr bool operator==(const Ratio<R> &r) const;
+    constexpr bool operator==(const Ratio<R> &r) const{
+		return m_num * r.m_denom == r.m_num * m_denom;
+	};
 
 	/// \brief test if *this and r are different
-    constexpr bool operator!=(const Ratio<R> &r) const;
+    constexpr bool operator!=(const Ratio<R> &r) const{
+    return !((*this) == r);
+	};
 
 	/// \brief test if *this is strictly greater than r 
-    constexpr bool operator>(const Ratio<R> &r) const;
+    constexpr bool operator>(const Ratio<R> &r) const {
+		return m_num * r.m_denom > r.m_num * m_denom;
+	};
 
 	/// \brief test if r is striclty greater than *this
-    constexpr bool operator<(const Ratio<R> &r) const;
+    constexpr bool operator<(const Ratio<R> &r) const {
+		return m_num * r.m_denom < r.m_num * m_denom;
+	};
 
 	/// \brief test if *this is greater than r or equal to r
-    constexpr bool operator>=(const Ratio<R> &r) const;
+    constexpr bool operator>=(const Ratio<R> &r) const  {
+		return (m_num * r.m_denom > r.m_num * m_denom) || ((*this) == r) ;
+	};
 
 	/// \brief test if r is greater than *this or equal to *this
-    constexpr bool operator<=(const Ratio<R> &r) const;
+    constexpr bool operator<=(const Ratio<R> &r) const {
+		return (m_num * r.m_denom < r.m_num * m_denom) || ((*this) == r) ;
+	};
 
 	/// \brief returns closest value to num
-	constexpr double compare_closest(const R &num, const double &a, const double &b) const;
+	double compare_closest(const R &num, const double &a, const double &b) const;
 
 	/// \brief convert float to ratio
 	/// \param max_nb_iter : number of iterations
 	/// \param precision: epsilon error 
-    constexpr Ratio<R> convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const ;
+    Ratio<R> convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const ;
 
 	/// \brief convert float to ratio, another method
-	constexpr Ratio<R> best_convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const;
+	Ratio<R> best_convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const;
 
 	/// \brief convert ratio to float
-	constexpr double convert_to_float() const;
+	double convert_to_float() const;
 
 
-	constexpr int digits_nb(double x) const;
+	int digits_nb(double x) const;
 
 
 	/// \brief overload the operator << for Ratio
@@ -237,6 +274,6 @@ class Ratio{
 
 	/// \brief return product of real and ratio
 	template<typename R, typename T>
-	constexpr Ratio<R> operator*(const T &n, const Ratio<R> &r){
+	Ratio<R> operator*(const T &n, const Ratio<R> &r){
 		return r*n;
 	}
