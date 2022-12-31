@@ -1,4 +1,5 @@
 #pragma once 
+#include <cmath>
 #include <iostream>
 #include <type_traits>
 
@@ -45,12 +46,16 @@ class Ratio{
 	/// \brief constructor from a numerator & a denominator, return 1 in Ratio if called empty 
 	/// \param num : numerator
 	/// \param denom : denominator
-	constexpr Ratio(const R num=1, const R denom=1): m_num(num), m_denom(denom){}
+	constexpr Ratio(const R num=1, const R denom=1): m_num(num), m_denom(denom){
+		this->reduce();
+	}
 
 
 	/// \brief copy constructor
 	/// \param r : Ratio
-	constexpr Ratio(const Ratio<R>&r):m_num(r.m_num), m_denom(r.m_denom){}
+	constexpr Ratio(const Ratio<R>&r):m_num(r.m_num), m_denom(r.m_denom){
+		this->reduce();
+	}
 
 
 	/// \brief Ratio constructor from a float / int
@@ -67,7 +72,12 @@ class Ratio{
 
 	/// \brief display num/denom
    	constexpr void displayRatio() const {
-    std::cout << m_num << "/" << m_denom << std::endl; 
+		if (m_denom == 0){
+			std::cout << INFINITY << std::endl;
+		}
+		else {
+			std::cout << m_num << "/" << m_denom << std::endl; 
+		}
 	}
 
 	/// \brief return the Ratio in irreducible form
@@ -266,8 +276,13 @@ class Ratio{
 };
 
 	template<typename R>
-	std::ostream& operator<< (std::ostream& stream, const Ratio<R> &r) {		
+	std::ostream& operator<< (std::ostream& stream, const Ratio<R> &r) {
+		if (r.m_denom == 0){
+			stream << INFINITY;
+		}
+		else {
     	stream << r.m_num << "/" << r.m_denom;
+		}
 		return stream;
 	}
 	

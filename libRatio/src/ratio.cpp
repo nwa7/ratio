@@ -6,24 +6,24 @@
 
 template<typename R>
 void Ratio<R>::reduce(){
-    if (this->getNum() == 0){
-        this->setNum(0);
-        this->setDenom(1);
-    }           
+
+    if (m_num == 0){
+        m_denom = 1;
+    }    
     else {
         int pgcd = std::gcd(m_num, m_denom);
-        this->setNum(m_num/pgcd);
-        this->setDenom(m_denom/pgcd);     
-    }     
+        m_num = m_num/pgcd;
+        m_denom = m_denom/pgcd;     
+    }
+         
 }
 
 template<typename R>
 Ratio<R>& Ratio<R>::operator=(const Ratio<R> &r) {
 
     if(&r == this) return *this;
-
-    this->setNum(r.m_num);
-    this->setDenom(r.m_denom);
+    m_num = r.m_num;
+    m_denom = r.m_denom;
     return *this;
 }
 
