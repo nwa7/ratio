@@ -61,8 +61,8 @@ class Ratio{
 	/// \brief Ratio constructor from a float / int
 	/// \param x real
 	constexpr Ratio(const double &x){
-    m_num = convert_float_to_ratio(x,4,0.01).m_num;
-    m_denom = convert_float_to_ratio(x,4,0.01).m_denom;
+    m_num = convert_float_to_ratio(x,3,0.01).m_num;
+    m_denom = convert_float_to_ratio(x,3,0.01).m_denom;
 	}
 
 
