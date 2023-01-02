@@ -124,8 +124,8 @@ TEST (RatioArithmetic, inverse ) {
 	for(int run=0; run<100; ++run){
         Ratio<int> r1(gen(),(uint)gen());
         Ratio<int> r2 = r1.inverse();
-        r1.displayRatio();
-        r2.displayRatio();
+        //r1.displayRatio();
+        //r2.displayRatio();
         ASSERT_EQ( r2.getNum()*r1.getNum(), r2.getDenom()*r1.getDenom());
     }
 }

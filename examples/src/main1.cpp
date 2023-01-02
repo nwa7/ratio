@@ -34,35 +34,21 @@ int main() {
 
     Ratio<int> g(8,6);
     std::cout << "8/6 = ";
-    g.reduce();
     g.displayRatio();
 
-    Ratio<int> h(15,11);
-    std::cout << "15/11 = ";
-    h.reduce();
-    h.displayRatio();
+    std::cout << "-a = " << -a << std::endl;
+    std::cout << "1/a = " << a.inverse() << std::endl;
+    
+    Ratio<int> h(-2,5);
+    std::cout << "h = " << h << std::endl;  
+    std::cout << "|h| = " << h.ratio_abs() << std::endl;
+ 
+    Ratio<int> i(-7,2);
+    std::cout << "i = " << i << std::endl; 
+    std::cout << "E(i) = " << i.ratio_intpart() << std::endl;
 
-    Ratio<int> i = - a;
-    std::cout << "-a = ";
-    i.displayRatio();
-
-    Ratio<int> j = a.inverse();
-    std::cout << "1/a = ";
+    Ratio <int> j(1,0);
     j.displayRatio();
-
-    Ratio<int> k(-2,5);
-    std::cout << "k = "; 
-    k.displayRatio();
-
-    Ratio<int> l = k.ratio_abs();
-    std::cout << "abs(k) = ";
-    l.displayRatio();
-
-    Ratio<int> m(-7,2);
-    std::cout << "m = "; 
-    m.displayRatio();
-    std::cout << "|m| = " << m.ratio_intpart() << std::endl;
-
 
     return 0;
 }

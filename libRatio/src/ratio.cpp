@@ -2,7 +2,7 @@
 #include <iostream>
 #include <numeric>
 #include <cmath>
-
+#include <cassert>
 
 template<typename R>
 void Ratio<R>::reduce(){
@@ -96,7 +96,7 @@ template<typename R>
 Ratio<R> Ratio<R>::ratio_sqrt2() const {
 
     double float_sqrt = std::sqrt(this->convert_to_float());
-    return convert_float_to_ratio(float_sqrt, 3, 0.01);
+    return convert_float_to_ratio(float_sqrt, 4, 0.01);
 
 }
 
@@ -129,7 +129,7 @@ Ratio<R> Ratio<R>::ratio_sqrt() const {
     }
 
     double float_sqrt = real_ratio_sqrt(this->convert_to_float());
-    return convert_float_to_ratio(float_sqrt, 3, 0.01);
+    return convert_float_to_ratio(float_sqrt, 4, 0.01);
 
 }
 
@@ -191,26 +191,7 @@ template<typename R>
 Ratio<R> Ratio<R>::ratio_exp() const{
 
     double float_exp = real_ratio_exp(this->convert_to_float());
-    return convert_float_to_ratio(float_exp, 3, 0.01);
-
-
-    //J'ai essaye d'appliquer horner directement sur un ratio mais ça marche pas trop si tu veux tenter de le faire toi
-
-    /*Ratio x = this->ratio_abs();
-
-    const unsigned int max_iter = 21;
-    Ratio test(max_iter, 1); 
-    Ratio result;
-    result += x / test;
-
-    for(unsigned int i=max_iter-1; i>=1; --i){
-        Ratio add(1,1);
-        Ratio add2(i,1);
-        result = add + (x / add2) * result;
-
-    }
-
-    return (this->convert_to_float() >= 0) ? result : result.inverse();*/
+    return convert_float_to_ratio(float_exp, 4, 0.01);
 
 }
 
@@ -219,7 +200,7 @@ Ratio<R> Ratio<R>::ratio_exp() const{
 template<typename R>
 Ratio<R> Ratio<R>::ratio_exp2() const{
     double float_exp = std::exp(this->convert_to_float());
-    return convert_float_to_ratio(float_exp, 3, 0.01);
+    return convert_float_to_ratio(float_exp, 4, 0.01);
 }
 
 //taylor series
@@ -240,14 +221,14 @@ T Ratio<R>::real_ratio_sin(const T &x) const{
 template<typename R>
 Ratio<R> Ratio<R>::ratio_sin() const{
     double float_sin = real_ratio_sin(this->convert_to_float());
-    return convert_float_to_ratio(float_sin, 3, 0.01);
+    return convert_float_to_ratio(float_sin, 4, 0.01);
 }
 
 
 template<typename R>
 Ratio<R> Ratio<R>::ratio_sin2() const{
     double float_sin = std::sin(this->convert_to_float());
-    return convert_float_to_ratio(float_sin, 3, 0.01);
+    return convert_float_to_ratio(float_sin, 4, 0.01);
 }
 
 //taylor series
@@ -273,7 +254,7 @@ Ratio<R> Ratio<R>::ratio_cos() const{
 template<typename R>
 Ratio<R> Ratio<R>::ratio_cos2() const{
     double float_cos = std::cos(this->convert_to_float());
-    return convert_float_to_ratio(float_cos, 3, 0.01);
+    return convert_float_to_ratio(float_cos, 4, 0.01);
 }
 
 
@@ -379,6 +360,7 @@ Ratio<R> Ratio<R>::best_convert_float_to_ratio(double x, const unsigned int max_
 //gerer le cas division par 0
 template<typename R>
 double Ratio<R>::convert_to_float() const {
+    assert(m_denom !=0);
    return (double) m_num/m_denom;
 }
 

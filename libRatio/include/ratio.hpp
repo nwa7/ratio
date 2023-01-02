@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <type_traits>
+#include <limits>
 
 // Doxygen menu
 /// \version 0.1
@@ -35,7 +36,7 @@ template <typename R>
 class Ratio{
     private : 
     R m_num;
-	typedef typename std::make_unsigned<R>::type unsigned_r;
+	typedef typename std::make_unsigned<R>::type unsigned_r; //unsigned version of type R
     unsigned_r m_denom; 
 
 	/// \brief Ratio is composed of two members : a numerator in int and a denominator in uint
@@ -47,6 +48,9 @@ class Ratio{
 	/// \param num : numerator
 	/// \param denom : denominator
 	constexpr Ratio(const R num=1, const R denom=1): m_num(num), m_denom(denom){
+		if(m_denom ==0){
+			m_denom = std::numeric_limits<int>::infinity();
+		}
 		this->reduce();
 	}
 
@@ -61,8 +65,8 @@ class Ratio{
 	/// \brief Ratio constructor from a float / int
 	/// \param x real
 	constexpr Ratio(const double &x){
-    m_num = convert_float_to_ratio(x,3,0.01).m_num;
-    m_denom = convert_float_to_ratio(x,3,0.01).m_denom;
+    m_num = convert_float_to_ratio(x,4,0.01).m_num;
+    m_denom = convert_float_to_ratio(x,4,0.01).m_denom;
 	}
 
 
