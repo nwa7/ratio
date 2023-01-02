@@ -16,6 +16,12 @@ Doxygen (if you want the documentation)
 - Mac : brew install doxygen
 - Windows : [[install]](https://www.doxygen.nl/manual/install.html)
 
+Google test (for unary tests)
+- Linux : sudo apt-get install libgtest-dev
+- Mac : 
+```cd /tmp, git clone https://github.com/google/googletest.git, cd googletest, mkdir build && cd build, cmake .., make, sudo make install```
+- Windows : [[install]](https://github.com/google/googletest)
+
 ## Compilation
 - go to main directory 
 - mkdir build
