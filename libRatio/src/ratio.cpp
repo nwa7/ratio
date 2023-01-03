@@ -2,7 +2,8 @@
 #include <iostream>
 #include <numeric>
 #include <cmath>
-#include <cassert>
+#include <exception>
+	
 
 template<typename R>
 void Ratio<R>::reduce(){
@@ -89,17 +90,6 @@ Ratio<R> Ratio<R>::operator-() const {
     return result;
 }
 
-
-///voir si on peut le faire directement pour les cas simples ? mais jsp si on y gagne bcp vu qu'on rajoute du code idk
-
-template<typename R>
-Ratio<R> Ratio<R>::ratio_sqrt2() const {
-
-    double float_sqrt = std::sqrt(this->convert_to_float());
-    return convert_float_to_ratio(float_sqrt, 4, 0.01);
-
-}
-
 //Newton 
 template<typename R>
 double Ratio<R>::real_ratio_sqrt(const double &n) const {
@@ -119,31 +109,17 @@ double Ratio<R>::real_ratio_sqrt(const double &n) const {
 }
 
 
-//gerer exception ici <0 
 template<typename R>
 Ratio<R> Ratio<R>::ratio_sqrt() const {
 
     if(m_num < 0){
-        std::cout << "Cannot find square root of negative number"
-        << std::endl;
+
+		throw std::invalid_argument("Cannot find square root of negative number");
     }
+    
 
     double float_sqrt = real_ratio_sqrt(this->convert_to_float());
     return convert_float_to_ratio(float_sqrt, 4, 0.01);
-
-}
-
-
-template<typename R>
-Ratio<R> Ratio<R>::ratio_pow2(const int &n) const{
-
-    Ratio<R> result = *(this); 
-    result.m_num = std::pow(result.m_num, n);
-    result.m_denom = std::pow(result.m_denom, n);
-    
-    result.reduce();
-
-    return result;
 
 }
 
@@ -196,13 +172,6 @@ Ratio<R> Ratio<R>::ratio_exp() const{
 }
 
 
-
-template<typename R>
-Ratio<R> Ratio<R>::ratio_exp2() const{
-    double float_exp = std::exp(this->convert_to_float());
-    return convert_float_to_ratio(float_exp, 4, 0.01);
-}
-
 //taylor series
 template<typename R>
 template<typename T>
@@ -225,12 +194,6 @@ Ratio<R> Ratio<R>::ratio_sin() const{
 }
 
 
-template<typename R>
-Ratio<R> Ratio<R>::ratio_sin2() const{
-    double float_sin = std::sin(this->convert_to_float());
-    return convert_float_to_ratio(float_sin, 4, 0.01);
-}
-
 //taylor series
 template<typename R>
 template<typename T>
@@ -249,14 +212,6 @@ Ratio<R> Ratio<R>::ratio_cos() const{
     double float_cos = real_ratio_cos(this->convert_to_float());
     return convert_float_to_ratio(float_cos, 4, 0.01);
 }
-
-
-template<typename R>
-Ratio<R> Ratio<R>::ratio_cos2() const{
-    double float_cos = std::cos(this->convert_to_float());
-    return convert_float_to_ratio(float_cos, 4, 0.01);
-}
-
 
 
 template<typename R>
@@ -289,15 +244,6 @@ Ratio<R> Ratio<R>::inverse() const {
 
     Ratio<R> result(m_denom, m_num);
     return result;
-}
-
-template<typename R>
-double Ratio<R>::compare_closest(const R &num, const double &a, const double &b) const {
-    if(std::fabs(num-a) <= std::fabs(num-b)){
-        return a;
-    }
-
-    return b;
 }
 
 template<typename R>
@@ -345,22 +291,9 @@ Ratio<R> Ratio<R>::convert_float_to_ratio(double x, const unsigned int max_nb_it
 }
 
 template<typename R>
-Ratio<R> Ratio<R>::best_convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const {
-    double result1 = convert_float_to_ratio(x,4, precision).convert_to_float();
-    double result2 = convert_float_to_ratio(x,max_nb_iter, precision).convert_to_float();
-
-    if(compare_closest(x, result1, result2) == result1){
-        return convert_float_to_ratio(x,4, precision);
-    }
-
-    return convert_float_to_ratio(x,max_nb_iter, precision);
-
-}
-
-//gerer le cas division par 0
-template<typename R>
 double Ratio<R>::convert_to_float() const {
-    assert(m_denom !=0);
+    if(m_denom ==0)
+		throw std::invalid_argument("Impossible to divide by 0");
    return (double) m_num/m_denom;
 }
 

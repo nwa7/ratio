@@ -174,46 +174,35 @@ class Ratio{
    	Ratio<R> ratio_sqrt() const ;
 
 	/// \brief real implementation of square root using Newton aproach
+	/// \param n ratio converted to float
     double real_ratio_sqrt(const double &n) const ;
-
-	/// \brief square root of *this using std
-    Ratio<R> ratio_sqrt2() const ;
 
 	/// \brief power of *this
     Ratio<R> ratio_pow(const double &n) const ;
-
-	/// \brief power of *this using std
-    Ratio<R> ratio_pow2(const int &n) const ;
 
 	/// \brief exponential of *this
 	Ratio<R> ratio_exp() const;
 
 	/// \brief real implementation of exponential using Horner
+	/// \param x ratio converted to float
 	template<typename T>
 	T real_ratio_exp(const T &x) const;
-
-	/// \brief exponential of *this using std
-	Ratio<R> ratio_exp2() const;
 
 	/// \brief sin of *this 
 	Ratio<R> ratio_sin() const;
 
 	/// \brief real implementation of sin using Taylor series
+	/// \param x ratio converted to float
 	template<typename T>
 	T real_ratio_sin(const T &x) const;
-
-	/// \brief sin of *this using std
-	Ratio<R> ratio_sin2() const;
 
 	/// \brief cos of *this
 	Ratio<R> ratio_cos() const;
 
 	/// \brief real implementation of cos using Taylor series
+	/// \param x ratio converted to float
 	template<typename T>
 	T real_ratio_cos(const T &x) const;
-
-	/// \brief cos of *this using std
-	Ratio<R> ratio_cos2() const;
 
 	/// \brief return *this with an absolute numerator
     Ratio<R> ratio_abs() const;
@@ -254,21 +243,15 @@ class Ratio{
 		return (m_num * r.m_denom < r.m_num * m_denom) || ((*this) == r) ;
 	};
 
-	/// \brief returns closest value to num
-	double compare_closest(const R &num, const double &a, const double &b) const;
-
 	/// \brief convert float to ratio
 	/// \param max_nb_iter : number of iterations
 	/// \param precision: epsilon error 
     Ratio<R> convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const ;
 
-	/// \brief convert float to ratio, another method
-	Ratio<R> best_convert_float_to_ratio(double x, const unsigned int max_nb_iter, const double precision) const;
-
 	/// \brief convert ratio to float
 	double convert_to_float() const;
 
-
+	/// \brief returns number of decimal digits
 	int digits_nb(double x) const;
 
 

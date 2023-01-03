@@ -25,13 +25,33 @@ TEST (RatioConstructor, copyConstructor) {
     auto gen = std::bind(uniformDistributionValue, myGenerator);
 
     for(int run=0; run<100; ++run){
-        Ratio<int> r1(gen(),gen());
+        Ratio<int> r1(gen(),(uint)gen());
         Ratio<int> r2(r1);
         ASSERT_EQ (r1.getNum(), r2.getNum());
         ASSERT_EQ (r1.getDenom(), r2.getDenom());
     }
 
 }
+
+
+TEST (RatioConstructor, floatConstructor) { 
+
+
+    const int maxNb= 1000; 
+    std::mt19937_64 myGenerator(0);
+    std::uniform_real_distribution<double> uniformDistributionValue(-maxNb,maxNb);
+    auto gen = std::bind(uniformDistributionValue, myGenerator);
+
+    for(int run=0; run<100; ++run){
+        const double x = gen();
+        Ratio<int> r(x);
+        double float_r = r.convert_to_float();
+        ASSERT_NEAR (x, float_r , 1.); 
+
+    }
+
+}
+
 
 /////////////////////////////////////////////////////
 // Arithmetic operators
@@ -124,11 +144,39 @@ TEST (RatioArithmetic, inverse ) {
 	for(int run=0; run<100; ++run){
         Ratio<int> r1(gen(),(uint)gen());
         Ratio<int> r2 = r1.inverse();
-        //r1.displayRatio();
-        //r2.displayRatio();
         ASSERT_EQ( r2.getNum()*r1.getNum(), r2.getDenom()*r1.getDenom());
     }
 }
+
+
+TEST (RatioArithmetic, abs) { 
+    const int maxNb= 1000; 
+	std::mt19937 myGenerator(0);
+    std::uniform_int_distribution<int> uniformDistributionValue(-maxNb,0);
+    auto gen = std::bind(uniformDistributionValue, myGenerator);
+
+	for(int run=0; run<100; ++run){
+        Ratio<int> r(gen(),(uint)gen());
+        ASSERT_EQ(-r, r.ratio_abs());
+    }
+}
+
+
+TEST (RatioArithmetic, intpart) { 
+    const int maxNb= 1000; 
+	std::mt19937 myGenerator(0);
+    std::uniform_int_distribution<int> uniformDistributionValue(-maxNb,maxNb);
+    auto gen = std::bind(uniformDistributionValue, myGenerator);
+
+	for(int run=0; run<100; ++run){
+        const double x = gen();
+        Ratio<int> r(x);
+        ASSERT_EQ((int)x, r.ratio_intpart());
+    }
+}
+
+
+
 /////////////////////////////////////////////////////
 // sqrt
 
@@ -216,6 +264,7 @@ TEST (Ratiopower, precision) {
 
 /////////////////////////////////////////////////////
 // exp
+
 TEST (Ratioexp, basic) { 
 
     Ratio <int> r(20,2);
@@ -323,6 +372,35 @@ TEST (Ratiosin, precision) {
         double std_sin = std::sin(x);
         double ratio_sin = (r.ratio_sin()).convert_to_float();
         ASSERT_NEAR (std_sin, ratio_sin, 0.2);       
+    }
+
+}
+
+
+/////////////////////////////////////////////////
+/// exception
+
+TEST (SQRTexception, negativeNumber) {
+
+    Ratio <int> r(-4,2);
+
+
+	EXPECT_THROW(Ratio <int> r_sqrt = r.ratio_sqrt(), std::invalid_argument);
+}
+
+
+
+TEST (VectorDException, differentSizeMessage) {
+
+    Ratio <int> r(-4,2);
+	const std::string expectedException = "Cannot find square root of negative number";
+
+
+	try{
+		Ratio <int> r_sqrt = r.ratio_sqrt();
+    }
+    catch( const std::exception &e){
+        EXPECT_TRUE( std::string(e.what()).find(expectedException) == 0);
     }
 
 }

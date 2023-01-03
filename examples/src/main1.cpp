@@ -48,7 +48,7 @@ int main() {
     std::cout << "E(i) = " << i.ratio_intpart() << std::endl;
 
     Ratio <int> j(1,0);
-    j.displayRatio();
+    std::cout << "1/0 = " << j << std::endl;
 
     return 0;
 }
