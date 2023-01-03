@@ -4,7 +4,7 @@
 # firefox index.html pour ouvrir
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = Erence
+PROJECT_NAME           = Sakuratio
 PROJECT_NUMBER         = 
 OUTPUT_DIRECTORY       = doc-doxygen
 CREATE_SUBDIRS         = NO
