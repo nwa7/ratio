@@ -1,4 +1,4 @@
-# Ratio
+# SakuRatio
 This is a students project made by **Laurence WANG** and **Elia ROARD** during their second year at IMAC.
 The purpose of this library is to represent float numbers as rational numbers (an object composed of a numerator & a denominator)
 
